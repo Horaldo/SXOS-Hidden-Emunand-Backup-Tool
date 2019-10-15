@@ -130,7 +130,7 @@ Public Class frmMain
         CalculateFileSelection()
     End Sub
 
-    Private Sub btRefresh_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btRefresh.Click
+    Private Sub RefreshDrives_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RefreshDrives.Click
         GetDriveInfo()
     End Sub
 
@@ -175,7 +175,7 @@ Public Class frmMain
         CalculateFileSelection()
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+    Private Sub Backup_Click(sender As Object, e As EventArgs) Handles Backup.Click
 
         CalculateFileSelection()
 
@@ -230,29 +230,32 @@ Public Class frmMain
             BOOT0.Enabled = False
             BOOT1.Enabled = False
             RAWNAND.Enabled = False
+            Backup.Enabled = False
         Else
             BOOT0.Enabled = True
+            BOOT0.Checked = True
             BOOT1.Enabled = True
             RAWNAND.Enabled = True
+            Backup.Enabled = True
         End If
         If BOOT0.Checked = True Then
-            Backupcommand = "-backup " + SXOSDrivePhysicalName + " " + FolderString + "Boot69.BIN 2 8192"
+            Backupcommand = "-backup " + SXOSDrivePhysicalName + " " + FolderString + "BOOT0.BIN 2 8192"
             'TextBox1.Text = Backupcommand
-            BinaryName = "BOOT69.BIN"
+            BinaryName = "BOOT0.BIN"
             BinaryFileSize = 4194304
         End If
 
         If BOOT1.Checked = True Then
-            Backupcommand = "-backup " + SXOSDrivePhysicalName + " " + FolderString + "Boot70.BIN 8194 8192"
+            Backupcommand = "-backup " + SXOSDrivePhysicalName + " " + FolderString + "BOOT1.BIN 8194 8192"
             'TextBox1.Text = Backupcommand
-            BinaryName = "BOOT70.BIN"
+            BinaryName = "BOOT1.BIN"
             BinaryFileSize = 4194304
         End If
 
         If RAWNAND.Checked = True Then
-            Backupcommand = "-backup " + SXOSDrivePhysicalName + " " + FolderString + "Boot71.BIN 16386 61071360"
+            Backupcommand = "-backup " + SXOSDrivePhysicalName + " " + FolderString + "RAWNAND.BIN 16386 61071360"
             'TextBox1.Text = Backupcommand
-            BinaryName = "BOOT71.BIN"
+            BinaryName = "RAWNAND.BIN"
             BinaryFileSize = 31268536320
         End If
 
@@ -260,18 +263,18 @@ Public Class frmMain
     End Sub
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button6.Click
-        'Form1.Show()
-        Application.DoEvents()
-        Dim flength As Long
-        flength = FileLen(FolderString & BinaryName)
-        Do Until flength = BinaryFileSize
-            flength = FileLen(FolderString & BinaryName)
-            TextBox5.Text = flength.ToString
-            TextBox5.Text = (FormatBytes(CULng(flength.ToString)))
-            ProgressBar1.Value = CInt(flength / 1024)
-            Application.DoEvents()
-        Loop
-        TextBox3.Text = flength.ToString
+
+        'Application.DoEvents()
+        'Dim flength As Long
+        'flength = FileLen(FolderString & BinaryName)
+        'Do Until flength = BinaryFileSize
+        '    flength = FileLen(FolderString & BinaryName)
+        '    FileSizeTextBox.Text = flength.ToString
+        '    FileSizeTextBox.Text = (FormatBytes(CULng(flength.ToString)))
+        '    ProgressBar1.Value = CInt(flength / 1024)
+        '    Application.DoEvents()
+        'Loop
+        'TextBox3.Text = flength.ToString
     End Sub
 
     Dim DoubleBytes As Double
@@ -325,12 +328,13 @@ Public Class frmMain
         Next
 
         ProgressBar1.Value = 0
-        TextBox5.Text = " "
+        FileSizeTextBox.Text = " "
         CanceledOperation = 1
 
     End Sub
 
     Private Sub Fileprogress()
+        Threading.Thread.Sleep(1000)
         Application.DoEvents()
 
         Dim ConvertedBinaryFileSize As Long
@@ -343,7 +347,7 @@ Public Class frmMain
         Do Until flength = BinaryFileSize
             flength = FileLen(FolderString & BinaryName)
             'TextBox5.Text = flength.ToString
-            TextBox5.Text = (FormatBytes(CULng(flength.ToString)))
+            FileSizeTextBox.Text = (FormatBytes(CULng(flength.ToString)))
             ProgressBar1.Value = CInt(flength / 1024)
             Application.DoEvents()
 
@@ -353,8 +357,9 @@ Public Class frmMain
             End If
         Loop
         'TextBox5.Text = flength.ToString
-        TextBox5.Text = (FormatBytes(CULng(flength.ToString)))
+        FileSizeTextBox.Text = (FormatBytes(CULng(flength.ToString)))
         ProgressBar1.Value = CInt(flength / 1024)
     End Sub
+
 
 End Class

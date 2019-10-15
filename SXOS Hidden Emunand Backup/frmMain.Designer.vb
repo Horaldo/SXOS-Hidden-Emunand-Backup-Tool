@@ -22,7 +22,7 @@ Partial Class frmMain
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.btRefresh = New System.Windows.Forms.Button()
+        Me.RefreshDrives = New System.Windows.Forms.Button()
         Me.lvDriveInfo = New System.Windows.Forms.ListView()
         Me._hidden = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.Partition = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
@@ -33,7 +33,7 @@ Partial Class frmMain
         Me.DriveSize = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.FreeSpace = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.TextBox1 = New System.Windows.Forms.TextBox()
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.Backup = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.TextBox2 = New System.Windows.Forms.TextBox()
         Me.BOOT0 = New System.Windows.Forms.RadioButton()
@@ -49,22 +49,22 @@ Partial Class frmMain
         Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
         Me.Cancel = New System.Windows.Forms.Button()
         Me.Button6 = New System.Windows.Forms.Button()
-        Me.TextBox5 = New System.Windows.Forms.TextBox()
+        Me.FileSizeTextBox = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
-        'btRefresh
+        'RefreshDrives
         '
-        Me.btRefresh.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btRefresh.Location = New System.Drawing.Point(666, 500)
-        Me.btRefresh.Margin = New System.Windows.Forms.Padding(2)
-        Me.btRefresh.Name = "btRefresh"
-        Me.btRefresh.Size = New System.Drawing.Size(58, 27)
-        Me.btRefresh.TabIndex = 1
-        Me.btRefresh.Text = "Refresh"
-        Me.btRefresh.UseVisualStyleBackColor = True
+        Me.RefreshDrives.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.RefreshDrives.Location = New System.Drawing.Point(681, 217)
+        Me.RefreshDrives.Margin = New System.Windows.Forms.Padding(2)
+        Me.RefreshDrives.Name = "RefreshDrives"
+        Me.RefreshDrives.Size = New System.Drawing.Size(58, 27)
+        Me.RefreshDrives.TabIndex = 1
+        Me.RefreshDrives.Text = "Refresh"
+        Me.RefreshDrives.UseVisualStyleBackColor = True
         '
         'lvDriveInfo
         '
@@ -78,7 +78,7 @@ Partial Class frmMain
         Me.lvDriveInfo.Margin = New System.Windows.Forms.Padding(2)
         Me.lvDriveInfo.MultiSelect = False
         Me.lvDriveInfo.Name = "lvDriveInfo"
-        Me.lvDriveInfo.Size = New System.Drawing.Size(726, 189)
+        Me.lvDriveInfo.Size = New System.Drawing.Size(744, 189)
         Me.lvDriveInfo.TabIndex = 2
         Me.lvDriveInfo.UseCompatibleStateImageBehavior = False
         Me.lvDriveInfo.View = System.Windows.Forms.View.Details
@@ -137,14 +137,15 @@ Partial Class frmMain
         Me.TextBox1.Size = New System.Drawing.Size(493, 20)
         Me.TextBox1.TabIndex = 3
         '
-        'Button1
+        'Backup
         '
-        Me.Button1.Location = New System.Drawing.Point(129, 478)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(100, 30)
-        Me.Button1.TabIndex = 4
-        Me.Button1.Text = "Backup"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.Backup.Enabled = False
+        Me.Backup.Location = New System.Drawing.Point(110, 369)
+        Me.Backup.Name = "Backup"
+        Me.Backup.Size = New System.Drawing.Size(100, 30)
+        Me.Backup.TabIndex = 4
+        Me.Backup.Text = "Backup"
+        Me.Backup.UseVisualStyleBackColor = True
         '
         'Label1
         '
@@ -188,7 +189,7 @@ Partial Class frmMain
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(29, 378)
+        Me.Label2.Location = New System.Drawing.Point(40, 269)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(88, 13)
         Me.Label2.TabIndex = 9
@@ -196,7 +197,7 @@ Partial Class frmMain
         '
         'BackupLocationPathTextbox
         '
-        Me.BackupLocationPathTextbox.Location = New System.Drawing.Point(123, 375)
+        Me.BackupLocationPathTextbox.Location = New System.Drawing.Point(134, 266)
         Me.BackupLocationPathTextbox.Name = "BackupLocationPathTextbox"
         Me.BackupLocationPathTextbox.ReadOnly = True
         Me.BackupLocationPathTextbox.RightToLeft = System.Windows.Forms.RightToLeft.No
@@ -205,7 +206,7 @@ Partial Class frmMain
         '
         'Browse
         '
-        Me.Browse.Location = New System.Drawing.Point(588, 375)
+        Me.Browse.Location = New System.Drawing.Point(599, 266)
         Me.Browse.Name = "Browse"
         Me.Browse.Size = New System.Drawing.Size(75, 23)
         Me.Browse.TabIndex = 12
@@ -214,7 +215,7 @@ Partial Class frmMain
         '
         'Button2
         '
-        Me.Button2.Location = New System.Drawing.Point(646, 582)
+        Me.Button2.Location = New System.Drawing.Point(622, 582)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(75, 23)
         Me.Button2.TabIndex = 13
@@ -226,7 +227,7 @@ Partial Class frmMain
         Me.GroupBox1.Controls.Add(Me.RAWNAND)
         Me.GroupBox1.Controls.Add(Me.BOOT1)
         Me.GroupBox1.Controls.Add(Me.BOOT0)
-        Me.GroupBox1.Location = New System.Drawing.Point(215, 401)
+        Me.GroupBox1.Location = New System.Drawing.Point(202, 292)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(336, 71)
         Me.GroupBox1.TabIndex = 14
@@ -246,7 +247,7 @@ Partial Class frmMain
         '
         'TextBox3
         '
-        Me.TextBox3.Location = New System.Drawing.Point(235, 507)
+        Me.TextBox3.Location = New System.Drawing.Point(259, 411)
         Me.TextBox3.Name = "TextBox3"
         Me.TextBox3.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.TextBox3.Size = New System.Drawing.Size(252, 20)
@@ -254,14 +255,14 @@ Partial Class frmMain
         '
         'ProgressBar1
         '
-        Me.ProgressBar1.Location = New System.Drawing.Point(235, 504)
+        Me.ProgressBar1.Location = New System.Drawing.Point(259, 408)
         Me.ProgressBar1.Name = "ProgressBar1"
         Me.ProgressBar1.Size = New System.Drawing.Size(252, 23)
         Me.ProgressBar1.TabIndex = 17
         '
         'Cancel
         '
-        Me.Cancel.Location = New System.Drawing.Point(583, 525)
+        Me.Cancel.Location = New System.Drawing.Point(324, 501)
         Me.Cancel.Name = "Cancel"
         Me.Cancel.Size = New System.Drawing.Size(138, 24)
         Me.Cancel.TabIndex = 20
@@ -270,25 +271,26 @@ Partial Class frmMain
         '
         'Button6
         '
-        Me.Button6.Location = New System.Drawing.Point(493, 478)
+        Me.Button6.Enabled = False
+        Me.Button6.Location = New System.Drawing.Point(529, 369)
         Me.Button6.Name = "Button6"
         Me.Button6.Size = New System.Drawing.Size(89, 30)
         Me.Button6.TabIndex = 15
         Me.Button6.Text = "Restore"
         Me.Button6.UseVisualStyleBackColor = True
         '
-        'TextBox5
+        'FileSizeTextBox
         '
-        Me.TextBox5.Location = New System.Drawing.Point(235, 533)
-        Me.TextBox5.Name = "TextBox5"
-        Me.TextBox5.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.TextBox5.Size = New System.Drawing.Size(252, 20)
-        Me.TextBox5.TabIndex = 16
+        Me.FileSizeTextBox.Location = New System.Drawing.Point(259, 437)
+        Me.FileSizeTextBox.Name = "FileSizeTextBox"
+        Me.FileSizeTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.FileSizeTextBox.Size = New System.Drawing.Size(252, 20)
+        Me.FileSizeTextBox.TabIndex = 16
         '
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(177, 514)
+        Me.Label3.Location = New System.Drawing.Point(205, 418)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(48, 13)
         Me.Label3.TabIndex = 21
@@ -297,7 +299,7 @@ Partial Class frmMain
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(177, 536)
+        Me.Label4.Location = New System.Drawing.Point(205, 440)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(41, 13)
         Me.Label4.TabIndex = 22
@@ -307,11 +309,11 @@ Partial Class frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(743, 669)
+        Me.ClientSize = New System.Drawing.Size(761, 669)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Cancel)
-        Me.Controls.Add(Me.TextBox5)
+        Me.Controls.Add(Me.FileSizeTextBox)
         Me.Controls.Add(Me.ProgressBar1)
         Me.Controls.Add(Me.Button6)
         Me.Controls.Add(Me.TextBox3)
@@ -322,10 +324,10 @@ Partial Class frmMain
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.TextBox2)
         Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.Backup)
         Me.Controls.Add(Me.TextBox1)
         Me.Controls.Add(Me.lvDriveInfo)
-        Me.Controls.Add(Me.btRefresh)
+        Me.Controls.Add(Me.RefreshDrives)
         Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "frmMain"
         Me.RightToLeft = System.Windows.Forms.RightToLeft.No
@@ -337,7 +339,7 @@ Partial Class frmMain
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents btRefresh As System.Windows.Forms.Button
+    Friend WithEvents RefreshDrives As System.Windows.Forms.Button
     Friend WithEvents lvDriveInfo As System.Windows.Forms.ListView
     Friend WithEvents _hidden As System.Windows.Forms.ColumnHeader
     Friend WithEvents ParentDrive As System.Windows.Forms.ColumnHeader
@@ -347,7 +349,7 @@ Partial Class frmMain
     Friend WithEvents FreeSpace As System.Windows.Forms.ColumnHeader
     Friend WithEvents FileSystem As System.Windows.Forms.ColumnHeader
     Friend WithEvents TextBox1 As TextBox
-    Friend WithEvents Button1 As Button
+    Friend WithEvents Backup As Button
     Friend WithEvents Label1 As Label
     Friend WithEvents VolumeName As ColumnHeader
     Friend WithEvents TextBox2 As TextBox
@@ -364,7 +366,7 @@ Partial Class frmMain
     Friend WithEvents ProgressBar1 As ProgressBar
     Friend WithEvents Cancel As Button
     Friend WithEvents Button6 As Button
-    Friend WithEvents TextBox5 As TextBox
+    Friend WithEvents FileSizeTextBox As TextBox
     Friend WithEvents Label3 As Label
     Friend WithEvents Label4 As Label
 End Class

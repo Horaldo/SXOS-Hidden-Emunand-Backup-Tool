@@ -359,6 +359,7 @@ Public Class frmMain
         'TextBox5.Text = flength.ToString
         FileSizeTextBox.Text = (FormatBytes(CULng(flength.ToString)))
         ProgressBar1.Value = CInt(flength / 1024)
+        MsgBox("Backup Of " & BinaryName & " Now Completed")
     End Sub
 
 

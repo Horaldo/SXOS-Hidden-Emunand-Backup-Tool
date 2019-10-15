@@ -2,7 +2,12 @@
 Imports System.Linq
 
 Public Class frmMain
-    Dim SXOSDRIVE As String
+    Dim SXOSDriveLetter As String
+    Dim SXOSDrivePhysicalName As String
+    Dim SXOSDriveType As String
+    Dim SXOSDriveVolumeName As String
+    Dim SXOSDriveFileSystem As String
+
     Dim Backupcommand As String
     Dim FolderLocation As String
     Dim FolderString As String
@@ -146,10 +151,24 @@ Public Class frmMain
 
                 'Select case to select which colunm of data you want to store in variables drom listview.
                 Select Case innercounter
+                    Case 1
+                        SXOSDriveLetter = myString
+
                     Case 2
 
-                        SXOSDRIVE = myString.Replace(" ", "")
+                        SXOSDrivePhysicalName = myString.Replace(" ", "")
+
+                    Case 3
+                        SXOSDriveType = myString
+
+                    Case 4
+                        SXOSDriveVolumeName = myString
+
+                    Case 5
+                        SXOSDriveFileSystem = myString
+
                 End Select
+
                 innercounter += 1
             Next
         End With
@@ -217,21 +236,21 @@ Public Class frmMain
             RAWNAND.Enabled = True
         End If
         If BOOT0.Checked = True Then
-            Backupcommand = "-backup " + SXOSDRIVE + " " + FolderString + "Boot69.BIN 2 8192"
+            Backupcommand = "-backup " + SXOSDrivePhysicalName + " " + FolderString + "Boot69.BIN 2 8192"
             'TextBox1.Text = Backupcommand
             BinaryName = "BOOT69.BIN"
             BinaryFileSize = 4194304
         End If
 
         If BOOT1.Checked = True Then
-            Backupcommand = "-backup " + SXOSDRIVE + " " + FolderString + "Boot70.BIN 8194 8192"
+            Backupcommand = "-backup " + SXOSDrivePhysicalName + " " + FolderString + "Boot70.BIN 8194 8192"
             'TextBox1.Text = Backupcommand
             BinaryName = "BOOT70.BIN"
             BinaryFileSize = 4194304
         End If
 
         If RAWNAND.Checked = True Then
-            Backupcommand = "-backup " + SXOSDRIVE + " " + FolderString + "Boot71.BIN 16386 61071360"
+            Backupcommand = "-backup " + SXOSDrivePhysicalName + " " + FolderString + "Boot71.BIN 16386 61071360"
             'TextBox1.Text = Backupcommand
             BinaryName = "BOOT71.BIN"
             BinaryFileSize = 31268536320

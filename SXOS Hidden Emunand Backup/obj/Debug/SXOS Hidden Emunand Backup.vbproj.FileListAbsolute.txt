@@ -14,3 +14,18 @@ C:\Users\Harry\Desktop\GetPartitionParentDisk\obj\Debug\SXOS Hidden Emunand Back
 C:\Users\Harry\Desktop\GetPartitionParentDisk\obj\Debug\SXOS Hidden Emunand Backup Tool.exe
 C:\Users\Harry\Desktop\GetPartitionParentDisk\obj\Debug\SXOS Hidden Emunand Backup Tool.xml
 C:\Users\Harry\Desktop\GetPartitionParentDisk\obj\Debug\SXOS Hidden Emunand Backup Tool.pdb
+C:\Users\Harry\Desktop\Git\SXOS Hidden Emunand Backup\bin\Debug\SXOS Hidden Emunand Backup Tool.exe.config
+C:\Users\Harry\Desktop\Git\SXOS Hidden Emunand Backup\bin\Debug\SXOS Hidden Emunand Backup Tool.exe
+C:\Users\Harry\Desktop\Git\SXOS Hidden Emunand Backup\bin\Debug\SXOS Hidden Emunand Backup Tool.pdb
+C:\Users\Harry\Desktop\Git\SXOS Hidden Emunand Backup\bin\Debug\SXOS Hidden Emunand Backup Tool.xml
+C:\Users\Harry\Desktop\Git\SXOS Hidden Emunand Backup\bin\Debug\Interop.Scripting.dll
+C:\Users\Harry\Desktop\Git\SXOS Hidden Emunand Backup\obj\Debug\SXOS Hidden Emunand Backup.vbprojAssemblyReference.cache
+C:\Users\Harry\Desktop\Git\SXOS Hidden Emunand Backup\obj\Debug\Interop.Scripting.dll
+C:\Users\Harry\Desktop\Git\SXOS Hidden Emunand Backup\obj\Debug\SXOS Hidden Emunand Backup.vbproj.ResolveComReference.cache
+C:\Users\Harry\Desktop\Git\SXOS Hidden Emunand Backup\obj\Debug\SXOSHiddenEmunandBackupTool.frmMain.resources
+C:\Users\Harry\Desktop\Git\SXOS Hidden Emunand Backup\obj\Debug\SXOSHiddenEmunandBackupTool.Resources.resources
+C:\Users\Harry\Desktop\Git\SXOS Hidden Emunand Backup\obj\Debug\SXOS Hidden Emunand Backup.vbproj.GenerateResource.cache
+C:\Users\Harry\Desktop\Git\SXOS Hidden Emunand Backup\obj\Debug\SXOS Hidden Emunand Backup.vbproj.CoreCompileInputs.cache
+C:\Users\Harry\Desktop\Git\SXOS Hidden Emunand Backup\obj\Debug\SXOS Hidden Emunand Backup Tool.exe
+C:\Users\Harry\Desktop\Git\SXOS Hidden Emunand Backup\obj\Debug\SXOS Hidden Emunand Backup Tool.xml
+C:\Users\Harry\Desktop\Git\SXOS Hidden Emunand Backup\obj\Debug\SXOS Hidden Emunand Backup Tool.pdb

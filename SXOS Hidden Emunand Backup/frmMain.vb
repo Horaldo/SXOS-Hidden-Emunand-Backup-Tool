@@ -264,7 +264,7 @@ Public Class frmMain
         End If
 
         If RAWNAND.Checked = True Then
-            Backupcommand = "-backup " + SXOSDrivePhysicalName + " " + """" + """" + FolderString + "RAWNAND.BIN" + """ " + "16386 61071360"
+            Backupcommand = "-backup " + SXOSDrivePhysicalName + " " + """" + FolderString + "RAWNAND.BIN" + """ " + "16386 61071360"
             'TextBox1.Text = Backupcommand
             BinaryName = "RAWNAND.BIN"
             BinaryFileSize = 31268536320

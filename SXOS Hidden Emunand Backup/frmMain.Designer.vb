@@ -167,6 +167,7 @@ Partial Class frmMain
         'BOOT0
         '
         Me.BOOT0.AutoSize = True
+        Me.BOOT0.Checked = True
         Me.BOOT0.Location = New System.Drawing.Point(28, 20)
         Me.BOOT0.Name = "BOOT0"
         Me.BOOT0.Size = New System.Drawing.Size(61, 17)
@@ -182,7 +183,6 @@ Partial Class frmMain
         Me.BOOT1.Name = "BOOT1"
         Me.BOOT1.Size = New System.Drawing.Size(61, 17)
         Me.BOOT1.TabIndex = 8
-        Me.BOOT1.TabStop = True
         Me.BOOT1.Text = "BOOT1"
         Me.BOOT1.UseVisualStyleBackColor = True
         '
@@ -241,7 +241,6 @@ Partial Class frmMain
         Me.RAWNAND.Name = "RAWNAND"
         Me.RAWNAND.Size = New System.Drawing.Size(82, 17)
         Me.RAWNAND.TabIndex = 9
-        Me.RAWNAND.TabStop = True
         Me.RAWNAND.Text = "RAWNAND"
         Me.RAWNAND.UseVisualStyleBackColor = True
         '
@@ -262,6 +261,7 @@ Partial Class frmMain
         '
         'Cancel
         '
+        Me.Cancel.Enabled = False
         Me.Cancel.Location = New System.Drawing.Point(324, 501)
         Me.Cancel.Name = "Cancel"
         Me.Cancel.Size = New System.Drawing.Size(138, 24)

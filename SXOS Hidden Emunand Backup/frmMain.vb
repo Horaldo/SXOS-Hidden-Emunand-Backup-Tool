@@ -196,7 +196,11 @@ Public Class frmMain
 
             Process.Start(myProcessStartInfo)
 
+
+
             Fileprogress()
+
+
 
         End If
 
@@ -238,7 +242,6 @@ Public Class frmMain
             Backup.Enabled = False
         Else
             BOOT0.Enabled = True
-            BOOT0.Checked = True
             BOOT1.Enabled = True
             RAWNAND.Enabled = True
             Backup.Enabled = True
@@ -320,12 +323,19 @@ Public Class frmMain
         ProgressBar1.Value = 0
         FileSizeTextBox.Text = " "
         CanceledOperation = 1
+        Cancel.Enabled = False
 
     End Sub
 
     Private Sub Fileprogress()
         Threading.Thread.Sleep(1000)
         Application.DoEvents()
+
+        If RAWNAND.Checked = True Then
+            Cancel.Enabled = True
+        Else
+            Cancel.Enabled = False
+        End If
 
         Dim ConvertedBinaryFileSize As Long
         ConvertedBinaryFileSize = CLng(BinaryFileSize / 1024)

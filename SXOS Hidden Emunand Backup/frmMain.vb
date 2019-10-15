@@ -194,8 +194,6 @@ Public Class frmMain
                 .UseShellExecute = False
             End With
 
-            TextBox1.Text = Backupcommand
-
             Process.Start(myProcessStartInfo)
 
 

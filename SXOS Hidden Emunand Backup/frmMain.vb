@@ -177,23 +177,28 @@ Public Class frmMain
 
     Private Sub Backup_Click(sender As Object, e As EventArgs) Handles Backup.Click
 
-        CalculateFileSelection()
+        If SXOSDriveLetter = Nothing Then
+            MsgBox("Please Select Your Drive To Backup")
+            Exit Sub
+        Else
 
-        Dim myProcessStartInfo As New ProcessStartInfo()
+            CalculateFileSelection()
 
-        With myProcessStartInfo
-            .FileName = "secinspect.exe"
-            .Arguments = Backupcommand
-            '.Verb = "runas"
-            .CreateNoWindow = True
-            .UseShellExecute = False
-        End With
+            Dim myProcessStartInfo As New ProcessStartInfo()
 
-        Process.Start(myProcessStartInfo)
+            With myProcessStartInfo
+                .FileName = "secinspect.exe"
+                .Arguments = Backupcommand
+                '.Verb = "runas"
+                .CreateNoWindow = True
+                .UseShellExecute = False
+            End With
 
-        Fileprogress()
+            Process.Start(myProcessStartInfo)
 
+            Fileprogress()
 
+        End If
 
     End Sub
 
@@ -260,21 +265,6 @@ Public Class frmMain
         End If
 
 
-    End Sub
-
-    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button6.Click
-
-        'Application.DoEvents()
-        'Dim flength As Long
-        'flength = FileLen(FolderString & BinaryName)
-        'Do Until flength = BinaryFileSize
-        '    flength = FileLen(FolderString & BinaryName)
-        '    FileSizeTextBox.Text = flength.ToString
-        '    FileSizeTextBox.Text = (FormatBytes(CULng(flength.ToString)))
-        '    ProgressBar1.Value = CInt(flength / 1024)
-        '    Application.DoEvents()
-        'Loop
-        'TextBox3.Text = flength.ToString
     End Sub
 
     Dim DoubleBytes As Double

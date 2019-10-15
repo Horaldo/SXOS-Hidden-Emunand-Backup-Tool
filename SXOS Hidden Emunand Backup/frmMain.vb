@@ -194,6 +194,8 @@ Public Class frmMain
                 .UseShellExecute = False
             End With
 
+            TextBox1.Text = Backupcommand
+
             Process.Start(myProcessStartInfo)
 
 
@@ -249,21 +251,21 @@ Public Class frmMain
             Backup.Enabled = True
         End If
         If BOOT0.Checked = True Then
-            Backupcommand = "-backup " + SXOSDrivePhysicalName + " " + FolderString + "BOOT0.BIN 2 8192"
+            Backupcommand = "-backup " + SXOSDrivePhysicalName + " " + """" + FolderString + "BOOT0.BIN" + """ " + "2 8192"
             'TextBox1.Text = Backupcommand
             BinaryName = "BOOT0.BIN"
             BinaryFileSize = 4194304
         End If
 
         If BOOT1.Checked = True Then
-            Backupcommand = "-backup " + SXOSDrivePhysicalName + " " + FolderString + "BOOT1.BIN 8194 8192"
+            Backupcommand = "-backup " + SXOSDrivePhysicalName + " " + """" + FolderString + "BOOT1.BIN" + """ " + "8194 8192"
             'TextBox1.Text = Backupcommand
             BinaryName = "BOOT1.BIN"
             BinaryFileSize = 4194304
         End If
 
         If RAWNAND.Checked = True Then
-            Backupcommand = "-backup " + SXOSDrivePhysicalName + " " + FolderString + "RAWNAND.BIN 16386 61071360"
+            Backupcommand = "-backup " + SXOSDrivePhysicalName + " " + """" + """" + FolderString + "RAWNAND.BIN" + """ " + "16386 61071360"
             'TextBox1.Text = Backupcommand
             BinaryName = "RAWNAND.BIN"
             BinaryFileSize = 31268536320

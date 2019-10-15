@@ -227,7 +227,7 @@ Public Class frmMain
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         'CalculateFileSelection()
         'Test
-        TextBox1.Text = FolderString & BinaryName
+        'TextBox1.Text = FolderString & BinaryName
     End Sub
 
     Private Sub CalculateFileSelection()

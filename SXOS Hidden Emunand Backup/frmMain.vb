@@ -190,6 +190,7 @@ Public Class frmMain
                 .FileName = "secinspect.exe"
                 .Arguments = Backupcommand
                 '.Verb = "runas"
+
                 .CreateNoWindow = True
                 .UseShellExecute = False
             End With

@@ -235,6 +235,8 @@ Public Class frmMain
     End Sub
 
     Private Sub CalculateFileSelection()
+        LocationTextBox.Text = SXOSDrivePhysicalName
+
         If BackupLocationPathTextbox.Text = "" Then
             BOOT0.Enabled = False
             BOOT1.Enabled = False
@@ -359,7 +361,11 @@ Public Class frmMain
         'TextBox5.Text = flength.ToString
         FileSizeTextBox.Text = (FormatBytes(CULng(flength.ToString)))
         ProgressBar1.Value = CInt(flength / 1024)
-        MsgBox("Backup Of " & BinaryName & " Now Completed")
+        MsgBox("Backup Of " & BinaryName & " Now Complete")
+
+        ProgressBar1.Value = 0
+        FileSizeTextBox.Text = " "
+        Cancel.Enabled = False
     End Sub
 
 

@@ -52,6 +52,8 @@ Partial Class frmMain
         Me.FileSizeTextBox = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.LocationTextBox = New System.Windows.Forms.TextBox()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -224,6 +226,7 @@ Partial Class frmMain
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.LocationTextBox)
         Me.GroupBox1.Controls.Add(Me.RAWNAND)
         Me.GroupBox1.Controls.Add(Me.BOOT1)
         Me.GroupBox1.Controls.Add(Me.BOOT0)
@@ -305,12 +308,35 @@ Partial Class frmMain
         Me.Label4.TabIndex = 22
         Me.Label4.Text = "Filesize"
         '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(12, 463)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(48, 13)
+        Me.Label5.TabIndex = 10
+        Me.Label5.Text = "Location"
+        '
+        'LocationTextBox
+        '
+        Me.LocationTextBox.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+        Me.LocationTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.LocationTextBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LocationTextBox.ForeColor = System.Drawing.Color.FromArgb(CType(CType(235, Byte), Integer), CType(CType(73, Byte), Integer), CType(CType(78, Byte), Integer))
+        Me.LocationTextBox.Location = New System.Drawing.Point(86, 43)
+        Me.LocationTextBox.Name = "LocationTextBox"
+        Me.LocationTextBox.ReadOnly = True
+        Me.LocationTextBox.Size = New System.Drawing.Size(159, 20)
+        Me.LocationTextBox.TabIndex = 11
+        Me.LocationTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(761, 669)
         Me.Controls.Add(Me.Label4)
+        Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Cancel)
         Me.Controls.Add(Me.FileSizeTextBox)
@@ -369,4 +395,6 @@ Partial Class frmMain
     Friend WithEvents FileSizeTextBox As TextBox
     Friend WithEvents Label3 As Label
     Friend WithEvents Label4 As Label
+    Friend WithEvents LocationTextBox As TextBox
+    Friend WithEvents Label5 As Label
 End Class

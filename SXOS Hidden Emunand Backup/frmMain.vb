@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports System.Linq
 
+
 Public Class frmMain
     Dim SXOSDriveLetter As String
     Dim SXOSDrivePhysicalName As String
@@ -136,6 +137,45 @@ Public Class frmMain
 
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         TextBox2.Text = appPath
+        Dim SetupPath As String = Application.StartupPath & "\secinspect.exe"
+
+        If System.IO.File.Exists(SetupPath) <> True Then
+
+            Using sCreateMSIFile As New FileStream(SetupPath, FileMode.Create)
+                sCreateMSIFile.Write(My.Resources.secinspect, 0, My.Resources.secinspect.Length)
+            End Using
+        End If
+
+    End Sub
+
+    Private Sub MyApplication_FormClosing(sender As Object, e As EventArgs) Handles Me.FormClosing
+        Dim arrayListInfo As New System.Collections.ArrayList()
+        Dim currentProcess As Process = Process.GetCurrentProcess()
+        Dim localAll As Process() = Process.GetProcesses()
+        Dim localByName As Process() = Process.GetProcessesByName("secinspect")
+        Dim proc As Process
+
+        Dim A As Integer
+        Dim B As Integer
+
+        For Each proc In localByName
+            arrayListInfo.Add(proc.Id)
+            B = B + 1
+        Next
+
+        For A = 0 To B - 1
+            'TextBox4.Text = TextBox4.Text + arrayListInfo(A).ToString & vbCrLf
+            Process.GetProcessById(CInt(arrayListInfo(A))).Kill()
+        Next
+
+
+        Dim FileToDelete As String = My.Application.Info.DirectoryPath + "\secinspect.exe"
+        If System.IO.File.Exists(FileToDelete) = True Then
+            Threading.Thread.Sleep(1000)
+            System.IO.File.Delete(FileToDelete)
+
+        Else : MyApplication_FormClosing(sender, e)
+        End If
     End Sub
 
     Private Sub lvDriveInfo_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lvDriveInfo.SelectedIndexChanged
@@ -369,5 +409,11 @@ Public Class frmMain
         Cancel.Enabled = False
     End Sub
 
+
+
+    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
+        TextBox1.Text = Backupcommand
+
+    End Sub
 
 End Class

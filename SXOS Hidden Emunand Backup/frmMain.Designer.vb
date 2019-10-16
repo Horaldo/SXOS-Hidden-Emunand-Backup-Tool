@@ -55,6 +55,7 @@ Partial Class frmMain
         Me.Label4 = New System.Windows.Forms.Label()
         Me.LocationTextBox = New System.Windows.Forms.TextBox()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -333,11 +334,21 @@ Partial Class frmMain
         Me.PictureBox1.TabIndex = 23
         Me.PictureBox1.TabStop = False
         '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(36, 515)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(98, 34)
+        Me.Button1.TabIndex = 24
+        Me.Button1.Text = "Button1"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(761, 669)
+        Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.PictureBox1)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.Label3)
@@ -402,4 +413,5 @@ Partial Class frmMain
     Friend WithEvents Label4 As Label
     Friend WithEvents LocationTextBox As TextBox
     Friend WithEvents PictureBox1 As PictureBox
+    Friend WithEvents Button1 As Button
 End Class

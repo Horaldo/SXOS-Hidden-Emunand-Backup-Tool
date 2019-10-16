@@ -94,7 +94,7 @@ Public Class frmMain
         Next
     End Sub
 
-    Private Sub frmMain_Resize(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Resize
+    Private Sub FrmMain_Resize(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Resize
 
         Dim cellWidth As Integer = 0
         For count As UShort = 1 To 7
@@ -121,7 +121,7 @@ Public Class frmMain
 
     End Sub
 
-    Private Sub frmMain_Shown(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Shown
+    Private Sub FrmMain_Shown(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Shown
 
         ' Trigger form.resize()
         Me.Width += 1
@@ -135,7 +135,7 @@ Public Class frmMain
         GetDriveInfo()
     End Sub
 
-    Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub FrmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         TextBox2.Text = appPath
         Dim SetupPath As String = Application.StartupPath & "\secinspect.exe"
 
@@ -149,36 +149,18 @@ Public Class frmMain
     End Sub
 
     Private Sub MyApplication_FormClosing(sender As Object, e As EventArgs) Handles Me.FormClosing
-        Dim arrayListInfo As New System.Collections.ArrayList()
-        Dim currentProcess As Process = Process.GetCurrentProcess()
-        Dim localAll As Process() = Process.GetProcesses()
-        Dim localByName As Process() = Process.GetProcessesByName("secinspect")
-        Dim proc As Process
-
-        Dim A As Integer
-        Dim B As Integer
-
-        For Each proc In localByName
-            arrayListInfo.Add(proc.Id)
-            B = B + 1
-        Next
-
-        For A = 0 To B - 1
-            'TextBox4.Text = TextBox4.Text + arrayListInfo(A).ToString & vbCrLf
-            Process.GetProcessById(CInt(arrayListInfo(A))).Kill()
-        Next
-
+        KillProcess()
 
         Dim FileToDelete As String = My.Application.Info.DirectoryPath + "\secinspect.exe"
         If System.IO.File.Exists(FileToDelete) = True Then
-            Threading.Thread.Sleep(1000)
+            Threading.Thread.Sleep(1500)
             System.IO.File.Delete(FileToDelete)
-
-        Else : MyApplication_FormClosing(sender, e)
         End If
+        End
+
     End Sub
 
-    Private Sub lvDriveInfo_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lvDriveInfo.SelectedIndexChanged
+    Private Sub LvDriveInfo_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lvDriveInfo.SelectedIndexChanged
         With Me.lvDriveInfo
             Dim i As Integer
             For Each item As ListViewItem In lvDriveInfo.SelectedItems
@@ -344,25 +326,7 @@ Public Class frmMain
 
     Private Sub Cancel_Click(sender As Object, e As EventArgs) Handles Cancel.Click
 
-        Dim arrayListInfo As New System.Collections.ArrayList()
-        Dim currentProcess As Process = Process.GetCurrentProcess()
-        Dim localAll As Process() = Process.GetProcesses()
-        Dim localByName As Process() = Process.GetProcessesByName("secinspect")
-        Dim proc As Process
-
-        Dim A As Integer
-        Dim B As Integer
-
-        For Each proc In localByName
-            arrayListInfo.Add(proc.Id)
-            B = B + 1
-        Next
-
-        For A = 0 To B - 1
-            'TextBox4.Text = TextBox4.Text + arrayListInfo(A).ToString & vbCrLf
-            Process.GetProcessById(CInt(arrayListInfo(A))).Kill()
-        Next
-
+        KillProcess()
         ProgressBar1.Value = 0
         FileSizeTextBox.Text = " "
         CanceledOperation = 1
@@ -414,6 +378,28 @@ Public Class frmMain
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
         TextBox1.Text = Backupcommand
 
+    End Sub
+
+
+    Private Sub KillProcess()
+        Dim arrayListInfo As New System.Collections.ArrayList()
+        Dim currentProcess As Process = Process.GetCurrentProcess()
+        Dim localAll As Process() = Process.GetProcesses()
+        Dim localByName As Process() = Process.GetProcessesByName("secinspect")
+        Dim proc As Process
+
+        Dim A As Integer
+        Dim B As Integer
+
+        For Each proc In localByName
+            arrayListInfo.Add(proc.Id)
+            B = B + 1
+        Next
+
+        For A = 0 To B - 1
+            'TextBox4.Text = TextBox4.Text + arrayListInfo(A).ToString & vbCrLf
+            Process.GetProcessById(CInt(arrayListInfo(A))).Kill()
+        Next
     End Sub
 
 End Class

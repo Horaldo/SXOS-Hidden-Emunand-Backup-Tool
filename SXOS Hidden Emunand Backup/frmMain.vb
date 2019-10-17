@@ -29,69 +29,69 @@ Public Class frmMain
         lvDriveInfo.Items.Clear()
 
         For Each drive As System.IO.DriveInfo In System.IO.DriveInfo.GetDrives
-            'If drive.DriveType = IO.DriveType.Fixed Then
+            'If drive.DriveType = IO.DriveType.Removable Then
 
 
             parentDrives = driveInfoEx.GetPhysicalDiskParentFor(drive.RootDirectory.ToString)
-            If parentDrives.Contains(", ") Then
-                ' We have multiple parent drives:
-                multipleParents = Split(parentDrives, ", ")
-                ' Enumerate them backwards so the lowest numbered drives are reported 1st
-                For more As Int32 = (multipleParents.Length - 1) To 0 Step -1
-                    If more = (multipleParents.Length - 1) Then
-                        lvDriveInfo.Items.Add("")
-                        lvDriveInfo.Items(count).SubItems.Add(drive.RootDirectory.ToString.Replace("\", ""))
-                        lvDriveInfo.Items(count).SubItems.Add(multipleParents(more)) ' Parent drive
-                        lvDriveInfo.Items(count).SubItems.Add(drive.DriveType.ToString)
+                If parentDrives.Contains(", ") Then
+                    ' We have multiple parent drives:
+                    multipleParents = Split(parentDrives, ", ")
+                    ' Enumerate them backwards so the lowest numbered drives are reported 1st
+                    For more As Int32 = (multipleParents.Length - 1) To 0 Step -1
+                        If more = (multipleParents.Length - 1) Then
+                            lvDriveInfo.Items.Add("")
+                            lvDriveInfo.Items(count).SubItems.Add(drive.RootDirectory.ToString.Replace("\", ""))
+                            lvDriveInfo.Items(count).SubItems.Add(multipleParents(more)) ' Parent drive
+                            lvDriveInfo.Items(count).SubItems.Add(drive.DriveType.ToString)
 
-                        If drive.IsReady Then
-                            lvDriveInfo.Items(count).SubItems.Add(drive.DriveFormat)
-                            lvDriveInfo.Items(count).SubItems.Add((drive.TotalSize / 1000000).ToString("N0") & " MB")
-                            lvDriveInfo.Items(count).SubItems.Add((drive.AvailableFreeSpace / 1000000).ToString("N0") & " MB")
+                            If drive.IsReady Then
+                                lvDriveInfo.Items(count).SubItems.Add(drive.DriveFormat)
+                                lvDriveInfo.Items(count).SubItems.Add((drive.TotalSize / 1000000).ToString("N0") & " MB")
+                                lvDriveInfo.Items(count).SubItems.Add((drive.AvailableFreeSpace / 1000000).ToString("N0") & " MB")
 
+                            Else
+                                lvDriveInfo.Items(count).SubItems.Add("No Disc")
+                                lvDriveInfo.Items(count).SubItems.Add("-")
+                                lvDriveInfo.Items(count).SubItems.Add("-")
+                            End If
                         Else
-                            lvDriveInfo.Items(count).SubItems.Add("No Disc")
+                            count += 1
+                            lvDriveInfo.Items.Add("")
+                            lvDriveInfo.Items(count).SubItems.Add(drive.RootDirectory.ToString.Replace("\", ""))
+                            lvDriveInfo.Items(count).SubItems.Add(multipleParents(more)) ' Parent drive
+                            lvDriveInfo.Items(count).SubItems.Add("Mirror or Span")
+                            If drive.IsReady Then
+                                lvDriveInfo.Items(count).SubItems.Add(drive.DriveFormat)
+                            Else
+                                lvDriveInfo.Items(count).SubItems.Add("")
+                            End If
                             lvDriveInfo.Items(count).SubItems.Add("-")
                             lvDriveInfo.Items(count).SubItems.Add("-")
                         End If
+                    Next
+                    count += 1
+                Else
+                    ' Just one parent drive for this partition.
+                    lvDriveInfo.Items.Add("")
+                    lvDriveInfo.Items(count).SubItems.Add(drive.RootDirectory.ToString.Replace("\", ""))
+                    lvDriveInfo.Items(count).SubItems.Add(parentDrives) ' Parent drive
+                    lvDriveInfo.Items(count).SubItems.Add(drive.DriveType.ToString)
+
+                    If drive.IsReady Then
+                        lvDriveInfo.Items(count).SubItems.Add(drive.VolumeLabel.ToString)
+                        lvDriveInfo.Items(count).SubItems.Add(drive.DriveFormat)
+                        lvDriveInfo.Items(count).SubItems.Add((drive.TotalSize / 1000000).ToString("N0") & " MB")
+                        lvDriveInfo.Items(count).SubItems.Add((drive.AvailableFreeSpace / 1000000).ToString("N0") & " MB")
+
                     Else
-                        count += 1
-                        lvDriveInfo.Items.Add("")
-                        lvDriveInfo.Items(count).SubItems.Add(drive.RootDirectory.ToString.Replace("\", ""))
-                        lvDriveInfo.Items(count).SubItems.Add(multipleParents(more)) ' Parent drive
-                        lvDriveInfo.Items(count).SubItems.Add("Mirror or Span")
-                        If drive.IsReady Then
-                            lvDriveInfo.Items(count).SubItems.Add(drive.DriveFormat)
-                        Else
-                            lvDriveInfo.Items(count).SubItems.Add("")
-                        End If
+                        lvDriveInfo.Items(count).SubItems.Add("No Disc")
                         lvDriveInfo.Items(count).SubItems.Add("-")
                         lvDriveInfo.Items(count).SubItems.Add("-")
                     End If
-                Next
-                count += 1
-            Else
-                ' Just one parent drive for this partition.
-                lvDriveInfo.Items.Add("")
-                lvDriveInfo.Items(count).SubItems.Add(drive.RootDirectory.ToString.Replace("\", ""))
-                lvDriveInfo.Items(count).SubItems.Add(parentDrives) ' Parent drive
-                lvDriveInfo.Items(count).SubItems.Add(drive.DriveType.ToString)
-
-                If drive.IsReady Then
-                    lvDriveInfo.Items(count).SubItems.Add(drive.VolumeLabel.ToString)
-                    lvDriveInfo.Items(count).SubItems.Add(drive.DriveFormat)
-                    lvDriveInfo.Items(count).SubItems.Add((drive.TotalSize / 1000000).ToString("N0") & " MB")
-                    lvDriveInfo.Items(count).SubItems.Add((drive.AvailableFreeSpace / 1000000).ToString("N0") & " MB")
-
-                Else
-                    lvDriveInfo.Items(count).SubItems.Add("No Disc")
-                    lvDriveInfo.Items(count).SubItems.Add("-")
-                    lvDriveInfo.Items(count).SubItems.Add("-")
+                    count += 1
                 End If
-                count += 1
-            End If
 
-            'End If
+           ' End If
         Next
     End Sub
 
@@ -357,12 +357,8 @@ Public Class frmMain
     End Sub
 
 
-
-
-
     Private Sub DoRestore()
         CalculateFileSelection()
-        ProgressBar1.Style = ProgressBarStyle.Marquee
 
         Dim myProcessStartInfo As New ProcessStartInfo()
 
@@ -373,6 +369,7 @@ Public Class frmMain
 
             .CreateNoWindow = True
             .UseShellExecute = False
+
         End With
 
         Process.Start(myProcessStartInfo)
@@ -605,21 +602,23 @@ Public Class frmMain
 
 
     Public Sub MyRestoreProgress()
-        'Threading.Thread.Sleep(1000)
         Dim Finished As Integer
-        'Check if the process sectinspect is runing Only way i could get some sort of progress bar working.
         Finished = 0
+        'Threading.Thread.Sleep(500)
+        ProgressBar1.Style = ProgressBarStyle.Marquee
+
+        'Check if the process MyApp is runing, Only way i could get some sort of progress bar working.
+
 
         Do Until Finished = 1
-            For Each CloseMyProcess As Process In Process.GetProcesses()
+            For Each CheckMyProgress As Process In Process.GetProcesses()
 
-                If CloseMyProcess.ProcessName.StartsWith("secinspect") Then
-                    'MsgBox("Secinspect Still Running")
-
+                If CheckMyProgress.ProcessName.StartsWith("secinspect") Then
+                    'MsgBox("MyApp Still Running")
                 End If
             Next
 
-            'process not found, So it is finaly been killed!!!
+            'process not found, So it is finaly finished
             Finished = 1
         Loop
         MsgBox("Restore now complete")

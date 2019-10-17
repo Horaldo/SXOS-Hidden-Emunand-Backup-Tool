@@ -66,7 +66,7 @@ Partial Class frmMain
         'RefreshDrives
         '
         Me.RefreshDrives.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.RefreshDrives.Location = New System.Drawing.Point(-146, 142)
+        Me.RefreshDrives.Location = New System.Drawing.Point(531, 213)
         Me.RefreshDrives.Margin = New System.Windows.Forms.Padding(2)
         Me.RefreshDrives.Name = "RefreshDrives"
         Me.RefreshDrives.Size = New System.Drawing.Size(58, 27)
@@ -80,11 +80,11 @@ Partial Class frmMain
         Me.lvDriveInfo.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me._hidden, Me.Partition, Me.ParentDrive, Me.DriveType, Me.VolumeName, Me.FileSystem, Me.DriveSize, Me.FreeSpace})
         Me.lvDriveInfo.FullRowSelect = True
         Me.lvDriveInfo.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
-        Me.lvDriveInfo.Location = New System.Drawing.Point(12, 44)
+        Me.lvDriveInfo.Location = New System.Drawing.Point(18, 39)
         Me.lvDriveInfo.Margin = New System.Windows.Forms.Padding(2)
         Me.lvDriveInfo.MultiSelect = False
         Me.lvDriveInfo.Name = "lvDriveInfo"
-        Me.lvDriveInfo.Size = New System.Drawing.Size(571, 162)
+        Me.lvDriveInfo.Size = New System.Drawing.Size(571, 160)
         Me.lvDriveInfo.TabIndex = 2
         Me.lvDriveInfo.UseCompatibleStateImageBehavior = False
         Me.lvDriveInfo.View = System.Windows.Forms.View.Details
@@ -137,7 +137,7 @@ Partial Class frmMain
         '
         'Backup
         '
-        Me.Backup.Location = New System.Drawing.Point(248, 299)
+        Me.Backup.Location = New System.Drawing.Point(248, 315)
         Me.Backup.Name = "Backup"
         Me.Backup.Size = New System.Drawing.Size(61, 30)
         Me.Backup.TabIndex = 4
@@ -187,7 +187,7 @@ Partial Class frmMain
         Me.GroupBox1.Controls.Add(Me.RAWNAND)
         Me.GroupBox1.Controls.Add(Me.BOOT1)
         Me.GroupBox1.Controls.Add(Me.BOOT0)
-        Me.GroupBox1.Location = New System.Drawing.Point(188, 222)
+        Me.GroupBox1.Location = New System.Drawing.Point(188, 238)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(330, 71)
         Me.GroupBox1.TabIndex = 14
@@ -219,7 +219,7 @@ Partial Class frmMain
         '
         'TextBox3
         '
-        Me.TextBox3.Location = New System.Drawing.Point(248, 341)
+        Me.TextBox3.Location = New System.Drawing.Point(248, 357)
         Me.TextBox3.Name = "TextBox3"
         Me.TextBox3.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.TextBox3.Size = New System.Drawing.Size(252, 20)
@@ -227,7 +227,7 @@ Partial Class frmMain
         '
         'ProgressBar1
         '
-        Me.ProgressBar1.Location = New System.Drawing.Point(248, 338)
+        Me.ProgressBar1.Location = New System.Drawing.Point(248, 354)
         Me.ProgressBar1.Name = "ProgressBar1"
         Me.ProgressBar1.Size = New System.Drawing.Size(252, 23)
         Me.ProgressBar1.TabIndex = 17
@@ -235,7 +235,7 @@ Partial Class frmMain
         'Cancel
         '
         Me.Cancel.Enabled = False
-        Me.Cancel.Location = New System.Drawing.Point(442, 299)
+        Me.Cancel.Location = New System.Drawing.Point(442, 315)
         Me.Cancel.Name = "Cancel"
         Me.Cancel.Size = New System.Drawing.Size(58, 30)
         Me.Cancel.TabIndex = 20
@@ -244,7 +244,7 @@ Partial Class frmMain
         '
         'Restore
         '
-        Me.Restore.Location = New System.Drawing.Point(349, 299)
+        Me.Restore.Location = New System.Drawing.Point(349, 315)
         Me.Restore.Name = "Restore"
         Me.Restore.Size = New System.Drawing.Size(56, 30)
         Me.Restore.TabIndex = 15
@@ -253,7 +253,7 @@ Partial Class frmMain
         '
         'FileSizeTextBox
         '
-        Me.FileSizeTextBox.Location = New System.Drawing.Point(248, 367)
+        Me.FileSizeTextBox.Location = New System.Drawing.Point(248, 383)
         Me.FileSizeTextBox.Name = "FileSizeTextBox"
         Me.FileSizeTextBox.ReadOnly = True
         Me.FileSizeTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No
@@ -263,7 +263,7 @@ Partial Class frmMain
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(185, 342)
+        Me.Label3.Location = New System.Drawing.Point(185, 358)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(48, 13)
         Me.Label3.TabIndex = 21
@@ -272,7 +272,7 @@ Partial Class frmMain
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(185, 370)
+        Me.Label4.Location = New System.Drawing.Point(185, 386)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(41, 13)
         Me.Label4.TabIndex = 22
@@ -281,7 +281,7 @@ Partial Class frmMain
         'PictureBox1
         '
         Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), System.Drawing.Image)
-        Me.PictureBox1.Location = New System.Drawing.Point(12, 235)
+        Me.PictureBox1.Location = New System.Drawing.Point(12, 251)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(160, 159)
         Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -290,7 +290,7 @@ Partial Class frmMain
         '
         'Browse
         '
-        Me.Browse.Location = New System.Drawing.Point(188, 436)
+        Me.Browse.Location = New System.Drawing.Point(188, 452)
         Me.Browse.Name = "Browse"
         Me.Browse.Size = New System.Drawing.Size(56, 20)
         Me.Browse.TabIndex = 12
@@ -299,7 +299,7 @@ Partial Class frmMain
         '
         'BackupLocationPathTextbox
         '
-        Me.BackupLocationPathTextbox.Location = New System.Drawing.Point(188, 410)
+        Me.BackupLocationPathTextbox.Location = New System.Drawing.Point(188, 426)
         Me.BackupLocationPathTextbox.Name = "BackupLocationPathTextbox"
         Me.BackupLocationPathTextbox.ReadOnly = True
         Me.BackupLocationPathTextbox.RightToLeft = System.Windows.Forms.RightToLeft.No
@@ -309,7 +309,7 @@ Partial Class frmMain
         'SaveLocLabel
         '
         Me.SaveLocLabel.AutoSize = True
-        Me.SaveLocLabel.Location = New System.Drawing.Point(105, 413)
+        Me.SaveLocLabel.Location = New System.Drawing.Point(105, 429)
         Me.SaveLocLabel.Name = "SaveLocLabel"
         Me.SaveLocLabel.Size = New System.Drawing.Size(82, 13)
         Me.SaveLocLabel.TabIndex = 25
@@ -319,7 +319,7 @@ Partial Class frmMain
         '
         Me.Percent.AutoSize = True
         Me.Percent.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Percent.Location = New System.Drawing.Point(366, 368)
+        Me.Percent.Location = New System.Drawing.Point(366, 384)
         Me.Percent.Name = "Percent"
         Me.Percent.Size = New System.Drawing.Size(0, 16)
         Me.Percent.TabIndex = 26
@@ -330,7 +330,7 @@ Partial Class frmMain
         Me.WarningLabel.BackColor = System.Drawing.SystemColors.ControlLight
         Me.WarningLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.WarningLabel.ForeColor = System.Drawing.Color.Red
-        Me.WarningLabel.Location = New System.Drawing.Point(15, 467)
+        Me.WarningLabel.Location = New System.Drawing.Point(15, 483)
         Me.WarningLabel.Name = "WarningLabel"
         Me.WarningLabel.Size = New System.Drawing.Size(573, 13)
         Me.WarningLabel.TabIndex = 27
@@ -347,7 +347,7 @@ Partial Class frmMain
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(12, 441)
+        Me.Button1.Location = New System.Drawing.Point(12, 457)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(75, 23)
         Me.Button1.TabIndex = 29
@@ -384,7 +384,7 @@ Partial Class frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(604, 486)
+        Me.ClientSize = New System.Drawing.Size(614, 501)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.BackupPathDebug)
         Me.Controls.Add(Me.Label5)

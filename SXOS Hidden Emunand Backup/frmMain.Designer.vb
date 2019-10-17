@@ -53,6 +53,7 @@ Partial Class frmMain
         Me.BackupLocationPathTextbox = New System.Windows.Forms.TextBox()
         Me.SaveLocLabel = New System.Windows.Forms.Label()
         Me.Percent = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -312,11 +313,21 @@ Partial Class frmMain
         Me.Percent.Size = New System.Drawing.Size(0, 16)
         Me.Percent.TabIndex = 26
         '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(542, 461)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(28, 13)
+        Me.Label2.TabIndex = 27
+        Me.Label2.Text = "Test"
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(604, 486)
+        Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Percent)
         Me.Controls.Add(Me.SaveLocLabel)
         Me.Controls.Add(Me.PictureBox1)
@@ -378,4 +389,5 @@ Partial Class frmMain
     Friend WithEvents BackupLocationPathTextbox As TextBox
     Friend WithEvents SaveLocLabel As Label
     Friend WithEvents Percent As Label
+    Friend WithEvents Label2 As Label
 End Class

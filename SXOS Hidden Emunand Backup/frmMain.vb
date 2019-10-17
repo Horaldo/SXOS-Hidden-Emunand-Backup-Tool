@@ -566,7 +566,7 @@ Public Class frmMain
         'TextBox5.Text = flength.ToString
         FileSizeTextBox.Text = (FormatBytes(CULng(flength.ToString)))
         ProgressBar1.Value = CInt(flength / 1024)
-        MsgBox("Backup Of " & BinaryName & " Now Complete")
+        MsgBox("Backup of " & BinaryName & " now complete")
 
         ProgressBar1.Value = 0
         FileSizeTextBox.Text = " "
@@ -605,6 +605,7 @@ Public Class frmMain
 
 
     Public Sub MyRestoreProgress()
+        'Threading.Thread.Sleep(1000)
         Dim Finished As Integer
         'Check if the process sectinspect is runing Only way i could get some sort of progress bar working.
         Finished = 0
@@ -612,8 +613,8 @@ Public Class frmMain
         Do Until Finished = 1
             For Each CloseMyProcess As Process In Process.GetProcesses()
 
-                If CloseMyProcess.ProcessName.StartsWith("sectinspect") Then
-                    MsgBox("Secinspect Still Running")
+                If CloseMyProcess.ProcessName.StartsWith("secinspect") Then
+                    'MsgBox("Secinspect Still Running")
 
                 End If
             Next

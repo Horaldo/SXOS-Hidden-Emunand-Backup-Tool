@@ -53,16 +53,12 @@ Partial Class frmMain
         Me.BackupLocationPathTextbox = New System.Windows.Forms.TextBox()
         Me.SaveLocLabel = New System.Windows.Forms.Label()
         Me.Percent = New System.Windows.Forms.Label()
-<<<<<<< HEAD
         Me.WarningLabel = New System.Windows.Forms.Label()
         Me.RestorePathDebug = New System.Windows.Forms.TextBox()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.BackupPathDebug = New System.Windows.Forms.TextBox()
-=======
-        Me.Label2 = New System.Windows.Forms.Label()
->>>>>>> f1548cbd6e5303d3faab94eb84ed9c6aded5a1bf
         Me.GroupBox1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -328,7 +324,6 @@ Partial Class frmMain
         Me.Percent.Size = New System.Drawing.Size(0, 16)
         Me.Percent.TabIndex = 26
         '
-<<<<<<< HEAD
         'WarningLabel
         '
         Me.WarningLabel.AutoSize = True
@@ -384,16 +379,6 @@ Partial Class frmMain
         Me.BackupPathDebug.ReadOnly = True
         Me.BackupPathDebug.Size = New System.Drawing.Size(484, 20)
         Me.BackupPathDebug.TabIndex = 32
-=======
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(542, 461)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(28, 13)
-        Me.Label2.TabIndex = 27
-        Me.Label2.Text = "Test"
->>>>>>> f1548cbd6e5303d3faab94eb84ed9c6aded5a1bf
         '
         'frmMain
         '
@@ -401,14 +386,11 @@ Partial Class frmMain
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(604, 486)
         Me.Controls.Add(Me.Label2)
-<<<<<<< HEAD
         Me.Controls.Add(Me.BackupPathDebug)
         Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.RestorePathDebug)
         Me.Controls.Add(Me.WarningLabel)
-=======
->>>>>>> f1548cbd6e5303d3faab94eb84ed9c6aded5a1bf
         Me.Controls.Add(Me.Percent)
         Me.Controls.Add(Me.SaveLocLabel)
         Me.Controls.Add(Me.PictureBox1)
@@ -470,14 +452,10 @@ Partial Class frmMain
     Friend WithEvents BackupLocationPathTextbox As TextBox
     Friend WithEvents SaveLocLabel As Label
     Friend WithEvents Percent As Label
-<<<<<<< HEAD
     Friend WithEvents WarningLabel As Label
     Friend WithEvents RestorePathDebug As TextBox
     Friend WithEvents Button1 As Button
     Friend WithEvents Label5 As Label
     Friend WithEvents Label2 As Label
     Friend WithEvents BackupPathDebug As TextBox
-=======
-    Friend WithEvents Label2 As Label
->>>>>>> f1548cbd6e5303d3faab94eb84ed9c6aded5a1bf
 End Class

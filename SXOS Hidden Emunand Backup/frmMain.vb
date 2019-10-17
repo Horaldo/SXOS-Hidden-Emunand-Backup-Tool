@@ -29,10 +29,10 @@ Public Class frmMain
         lvDriveInfo.Items.Clear()
 
         For Each drive As System.IO.DriveInfo In System.IO.DriveInfo.GetDrives
-            'If drive.DriveType = IO.DriveType.Removable Then
+            If drive.DriveType = IO.DriveType.Removable Then
 
 
-            parentDrives = driveInfoEx.GetPhysicalDiskParentFor(drive.RootDirectory.ToString)
+                parentDrives = driveInfoEx.GetPhysicalDiskParentFor(drive.RootDirectory.ToString)
                 If parentDrives.Contains(", ") Then
                     ' We have multiple parent drives:
                     multipleParents = Split(parentDrives, ", ")
@@ -91,7 +91,7 @@ Public Class frmMain
                     count += 1
                 End If
 
-           ' End If
+            End If
         Next
     End Sub
 

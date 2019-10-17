@@ -1,0 +1,13 @@
+C:\Users\Admin\Downloads\SXOS-Hidden-Emunand-Backup-Tool-master (3)\SXOS-Hidden-Emunand-Backup-Tool-master\SXOS Hidden Emunand Backup\bin\Release\SXOS Hidden Emunand Backup Tool.exe.config
+C:\Users\Admin\Downloads\SXOS-Hidden-Emunand-Backup-Tool-master (3)\SXOS-Hidden-Emunand-Backup-Tool-master\SXOS Hidden Emunand Backup\obj\Release\Interop.Scripting.dll
+C:\Users\Admin\Downloads\SXOS-Hidden-Emunand-Backup-Tool-master (3)\SXOS-Hidden-Emunand-Backup-Tool-master\SXOS Hidden Emunand Backup\obj\Release\SXOS Hidden Emunand Backup.vbproj.ResolveComReference.cache
+C:\Users\Admin\Downloads\SXOS-Hidden-Emunand-Backup-Tool-master (3)\SXOS-Hidden-Emunand-Backup-Tool-master\SXOS Hidden Emunand Backup\bin\Release\SXOS Hidden Emunand Backup Tool.exe
+C:\Users\Admin\Downloads\SXOS-Hidden-Emunand-Backup-Tool-master (3)\SXOS-Hidden-Emunand-Backup-Tool-master\SXOS Hidden Emunand Backup\bin\Release\SXOS Hidden Emunand Backup Tool.pdb
+C:\Users\Admin\Downloads\SXOS-Hidden-Emunand-Backup-Tool-master (3)\SXOS-Hidden-Emunand-Backup-Tool-master\SXOS Hidden Emunand Backup\bin\Release\SXOS Hidden Emunand Backup Tool.xml
+C:\Users\Admin\Downloads\SXOS-Hidden-Emunand-Backup-Tool-master (3)\SXOS-Hidden-Emunand-Backup-Tool-master\SXOS Hidden Emunand Backup\bin\Release\Interop.Scripting.dll
+C:\Users\Admin\Downloads\SXOS-Hidden-Emunand-Backup-Tool-master (3)\SXOS-Hidden-Emunand-Backup-Tool-master\SXOS Hidden Emunand Backup\obj\Release\SXOSHiddenEmunandBackupTool.frmMain.resources
+C:\Users\Admin\Downloads\SXOS-Hidden-Emunand-Backup-Tool-master (3)\SXOS-Hidden-Emunand-Backup-Tool-master\SXOS Hidden Emunand Backup\obj\Release\SXOSHiddenEmunandBackupTool.Resources.resources
+C:\Users\Admin\Downloads\SXOS-Hidden-Emunand-Backup-Tool-master (3)\SXOS-Hidden-Emunand-Backup-Tool-master\SXOS Hidden Emunand Backup\obj\Release\SXOS Hidden Emunand Backup.vbproj.GenerateResource.Cache
+C:\Users\Admin\Downloads\SXOS-Hidden-Emunand-Backup-Tool-master (3)\SXOS-Hidden-Emunand-Backup-Tool-master\SXOS Hidden Emunand Backup\obj\Release\SXOS Hidden Emunand Backup Tool.exe
+C:\Users\Admin\Downloads\SXOS-Hidden-Emunand-Backup-Tool-master (3)\SXOS-Hidden-Emunand-Backup-Tool-master\SXOS Hidden Emunand Backup\obj\Release\SXOS Hidden Emunand Backup Tool.xml
+C:\Users\Admin\Downloads\SXOS-Hidden-Emunand-Backup-Tool-master (3)\SXOS-Hidden-Emunand-Backup-Tool-master\SXOS Hidden Emunand Backup\obj\Release\SXOS Hidden Emunand Backup Tool.pdb

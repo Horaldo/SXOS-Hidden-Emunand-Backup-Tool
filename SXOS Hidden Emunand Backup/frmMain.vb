@@ -612,7 +612,7 @@ Public Class frmMain
 
         Dim Finished As Integer
         Dim pName As String = "secinspect"
-        Dim psList() As Process
+        'Dim psList() As Process
 
 
         If RAWNAND.Checked = True Then

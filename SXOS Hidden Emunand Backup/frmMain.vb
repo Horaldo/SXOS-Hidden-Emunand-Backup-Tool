@@ -1,18 +1,23 @@
 ﻿Imports System.IO
 Imports System.Linq
+Imports SXOSHiddenEmunandBackupTool.SXOSDrive
 
 
 Public Class frmMain
-    Dim SXOSDriveLetter As String
-    Dim SXOSDrivePhysicalName As String
-    Dim SXOSDriveType As String
-    Dim SXOSDriveVolumeName As String
-    Dim SXOSDriveFileSystem As String
+
+    Dim bsrc As New BindingSource
+    Dim dset As New DataSet
+    Dim drive As New SXOSDrive
+    ReadOnly inspector As String = "secinspect.exe"
+    Dim SelectedFolder As String = ""
+
+    Enum BorR
+        Backup
+        Restore
+    End Enum
 
     Dim Backupcommand As String
     Dim RestoreCommand As String
-    Dim FolderLocation As String
-    Dim FolderString As String
     Dim appPath As String = Application.StartupPath()
     Dim BinaryName As String
     Dim BinaryFileSize As Long
@@ -32,8 +37,8 @@ Public Class frmMain
         lvDriveInfo.Items.Clear()
 
         For Each drive As System.IO.DriveInfo In System.IO.DriveInfo.GetDrives
+            'Since we are only concerned with USB devices and not fixed disks, we are checking for removeable devices            
             If drive.DriveType = IO.DriveType.Removable Then
-
 
                 parentDrives = driveInfoEx.GetPhysicalDiskParentFor(drive.RootDirectory.ToString)
                 If parentDrives.Contains(", ") Then
@@ -125,38 +130,30 @@ Public Class frmMain
 
     End Sub
 
-    Private Sub FrmMain_Shown(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Shown
-
-        ' Trigger form.resize()
-        Me.Width += 1
-        Me.Refresh()
-
-        GetDriveInfo()
-        CalculateFileSelection()
-    End Sub
-
-    Private Sub RefreshDrives_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RefreshDrives.Click
+    Private Sub RefreshDrives_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRefreshDrives.Click
         GetDriveInfo()
     End Sub
 
     Private Sub FrmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        Dim SetupPath As String = Application.StartupPath & "\secinspect.exe"
+        Me.lvDriveInfo.View = View.Details
 
-        If System.IO.File.Exists(SetupPath) <> True Then
+        Dim SetupPath As String = appPath & "\" & inspector
 
+        If System.IO.File.Exists(SetupPath) Then
             Using sCreateMSIFile As New FileStream(SetupPath, FileMode.Create)
                 sCreateMSIFile.Write(My.Resources.secinspect, 0, My.Resources.secinspect.Length)
             End Using
         End If
 
+        GetDriveInfo()
     End Sub
 
     Private Sub MyApplication_FormClosing(sender As Object, e As EventArgs) Handles Me.FormClosing
         KillProcess()
 
-        Dim FileToDelete As String = My.Application.Info.DirectoryPath + "\secinspect.exe"
-        If System.IO.File.Exists(FileToDelete) = True Then
+        Dim FileToDelete As String = My.Application.Info.DirectoryPath & "\" & inspector
+        If System.IO.File.Exists(FileToDelete) Then
             Threading.Thread.Sleep(1500)
             System.IO.File.Delete(FileToDelete)
         End If
@@ -178,47 +175,33 @@ Public Class frmMain
                 'Select case to select which colunm of data you want to store in variables drom listview.
                 Select Case innercounter
                     Case 1
-                        SXOSDriveLetter = myString
-
+                        drive.DriveLetter = myString
                     Case 2
-
-                        SXOSDrivePhysicalName = myString.Replace(" ", "")
-
+                        drive.DrivePhysicalName = myString.Replace(" ", "")
                     Case 3
-                        SXOSDriveType = myString
-
+                        drive.DriveType = myString
                     Case 4
-                        SXOSDriveVolumeName = myString
-
+                        drive.DriveVolumeName = myString
                     Case 5
-                        SXOSDriveFileSystem = myString
-
+                        drive.DriveFileSystem = myString
                 End Select
-
                 innercounter += 1
             Next
         End With
-        CalculateFileSelection()
     End Sub
 
-    Private Sub Backup_Click(sender As Object, e As EventArgs) Handles Backup.Click
+    Private Sub Backup_Click(sender As Object, e As EventArgs) Handles btnBackup.Click
 
-        If SXOSDriveLetter = Nothing Then
-            MsgBox("Please select the SXOS drive to backup")
+        If drive.DriveLetter = Nothing Then
+            MsgBox("Please select the SXOS drive to backup!", MsgBoxStyle.Exclamation)
             Exit Sub
         Else
             If LocationTextBox.Text = "TXNAND" Then
-
                 If BackupLocationPathTextbox.Text = "" Then
-
                     If FolderBrowserDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
-                        FolderLocation = FolderBrowserDialog1.SelectedPath
-                        FolderString = FolderLocation
-                        If FolderString.EndsWith("\") = False Then
-                            FolderString = FolderLocation & "\"
-                        End If
-                        BackupLocationPathTextbox.Text = FolderString
-                        CalculateFileSelection()
+                        SelectedFolder = IIf(Not FolderBrowserDialog1.SelectedPath.EndsWith("\"), FolderBrowserDialog1.SelectedPath & "\", FolderBrowserDialog1.SelectedPath)
+                        BackupLocationPathTextbox.Text = SelectedFolder
+                        CalculateFileSelection(BorR.Backup)
                     End If
 
                     If BackupLocationPathTextbox.Text = "" Then
@@ -226,32 +209,23 @@ Public Class frmMain
                     Else
                         OverwriteCheck()
                     End If
-
                 Else
-
                     OverwriteCheck()
-
                 End If
             Else
-
                 MsgBox("The selected drive does not contain an SXOS Emunand")
                 Exit Sub
-
             End If
-
         End If
-
     End Sub
 
 
     Private Sub OverwriteCheck()
-        If BOOT0.Checked = True Then
+        If BOOT0.Checked Then
             If My.Computer.FileSystem.FileExists(BackupLocationPathTextbox.Text + "BOOT0.BIN") Then
-                Select Case MsgBox("BOOT0.BIN already exists. Overwrite?", MsgBoxStyle.YesNoCancel, "FILE ALREADY EXISTS")
+                Select Case MsgBox("BOOT0.BIN already exists. Overwrite?", MsgBoxStyle.YesNo, "FILE ALREADY EXISTS")
                     Case MsgBoxResult.Yes
                         DoBackup()
-                    Case MsgBoxResult.Cancel
-                        Exit Sub
                     Case MsgBoxResult.No
                         Exit Sub
                 End Select
@@ -260,13 +234,11 @@ Public Class frmMain
             End If
         End If
 
-        If BOOT1.Checked = True Then
+        If BOOT1.Checked Then
             If My.Computer.FileSystem.FileExists(BackupLocationPathTextbox.Text + "BOOT1.BIN") Then
-                Select Case MsgBox("BOOT1.BIN already exists. Overwrite?", MsgBoxStyle.YesNoCancel, "FILE ALREADY EXISTS")
+                Select Case MsgBox("BOOT1.BIN already exists. Overwrite?", MsgBoxStyle.YesNo, "FILE ALREADY EXISTS")
                     Case MsgBoxResult.Yes
                         DoBackup()
-                    Case MsgBoxResult.Cancel
-                        Exit Sub
                     Case MsgBoxResult.No
                         Exit Sub
                 End Select
@@ -275,13 +247,11 @@ Public Class frmMain
             End If
         End If
 
-        If RAWNAND.Checked = True Then
+        If RAWNAND.Checked Then
             If My.Computer.FileSystem.FileExists(BackupLocationPathTextbox.Text + "RAWNAND.BIN") Then
-                Select Case MsgBox("RAWNAND.BIN already exists. Overwrite?", MsgBoxStyle.YesNoCancel, "FILE ALREADY EXISTS")
+                Select Case MsgBox("RAWNAND.BIN already exists. Overwrite?", MsgBoxStyle.YesNo, "FILE ALREADY EXISTS")
                     Case MsgBoxResult.Yes
                         DoBackup()
-                    Case MsgBoxResult.Cancel
-                        Exit Sub
                     Case MsgBoxResult.No
                         Exit Sub
                 End Select
@@ -292,12 +262,12 @@ Public Class frmMain
     End Sub
 
     Private Sub DoBackup()
-        CalculateFileSelection()
+        CalculateFileSelection(BorR.Backup)
 
         Dim myProcessStartInfo As New ProcessStartInfo()
 
         With myProcessStartInfo
-            .FileName = "secinspect.exe"
+            .FileName = inspector
             .Arguments = Backupcommand
             '.Verb = "runas"
 
@@ -307,19 +277,15 @@ Public Class frmMain
 
         Process.Start(myProcessStartInfo)
 
-
-
         Fileprogress()
     End Sub
 
     Private Sub RestoreCheck()
-        If BOOT0.Checked = True Then
+        If BOOT0.Checked Then
             If My.Computer.FileSystem.FileExists(BackupLocationPathTextbox.Text + "BOOT0.BIN") Then
-                Select Case MsgBox("Are you sure you want to restore BOOT0.BIN to " & LocationTextBox.Text & "?", MsgBoxStyle.YesNoCancel, "CONFIRM RESTORE")
+                Select Case MsgBox("Are you sure you want to restore BOOT0.BIN to " & LocationTextBox.Text & "?", MsgBoxStyle.YesNo, "CONFIRM RESTORE")
                     Case MsgBoxResult.Yes
                         DoRestore()
-                    Case MsgBoxResult.Cancel
-                        Exit Sub
                     Case MsgBoxResult.No
                         Exit Sub
                 End Select
@@ -328,13 +294,11 @@ Public Class frmMain
             End If
         End If
 
-        If BOOT1.Checked = True Then
+        If BOOT1.Checked Then
             If My.Computer.FileSystem.FileExists(BackupLocationPathTextbox.Text + "BOOT1.BIN") Then
-                Select Case MsgBox("Are you sure you want to restore BOOT1.BIN to " & LocationTextBox.Text & "?", MsgBoxStyle.YesNoCancel, "CONFIRM RESTORE")
+                Select Case MsgBox("Are you sure you want to restore BOOT1.BIN to " & LocationTextBox.Text & "?", MsgBoxStyle.YesNo, "CONFIRM RESTORE")
                     Case MsgBoxResult.Yes
                         DoRestore()
-                    Case MsgBoxResult.Cancel
-                        Exit Sub
                     Case MsgBoxResult.No
                         Exit Sub
                 End Select
@@ -343,13 +307,11 @@ Public Class frmMain
             End If
         End If
 
-        If RAWNAND.Checked = True Then
+        If RAWNAND.Checked Then
             If My.Computer.FileSystem.FileExists(BackupLocationPathTextbox.Text + "RAWNAND.BIN") Then
-                Select Case MsgBox("Are you sure you want to restore RAWNAND.BIN to " & LocationTextBox.Text & "?", MsgBoxStyle.YesNoCancel, "CONFIRM RESTORE")
+                Select Case MsgBox("Are you sure you want to restore RAWNAND.BIN to " & LocationTextBox.Text & "?", MsgBoxStyle.YesNo, "CONFIRM RESTORE")
                     Case MsgBoxResult.Yes
                         DoRestore()
-                    Case MsgBoxResult.Cancel
-                        Exit Sub
                     Case MsgBoxResult.No
                         Exit Sub
                 End Select
@@ -359,19 +321,20 @@ Public Class frmMain
         End If
     End Sub
 
-
     Private Sub DoRestore()
-        CalculateFileSelection()
+        CalculateFileSelection(BorR.Restore)
 
         Dim myProcessStartInfo As New ProcessStartInfo()
 
         With myProcessStartInfo
-            .FileName = "secinspect.exe"
+            .FileName = inspector
             .Arguments = RestoreCommand
             '.Verb = "runas"
 
             .CreateNoWindow = False
             .UseShellExecute = True
+
+            .RedirectStandardOutput = True
 
         End With
 
@@ -380,107 +343,86 @@ Public Class frmMain
         MyRestoreProgress()
     End Sub
 
-
-
-    Private Sub BOOT0_CheckedChanged(sender As Object, e As EventArgs) Handles BOOT0.CheckedChanged
-        CalculateFileSelection()
-    End Sub
-
-    Private Sub BOOT1_CheckedChanged(sender As Object, e As EventArgs) Handles BOOT1.CheckedChanged
-        CalculateFileSelection()
-    End Sub
-    Private Sub RAWNAND_CheckedChanged(sender As Object, e As EventArgs) Handles RAWNAND.CheckedChanged
-        CalculateFileSelection()
-    End Sub
-    Private Sub Browse_Click(sender As Object, e As EventArgs) Handles Browse.Click
+    Private Sub btnBrowse_Click(sender As Object, e As EventArgs) Handles btnBrowse.Click
         If FolderBrowserDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
-            FolderLocation = FolderBrowserDialog1.SelectedPath
-            FolderString = FolderLocation
-            If FolderString.EndsWith("\") = False Then
-                FolderString = FolderLocation & "\"
-            End If
-            BackupLocationPathTextbox.Text = FolderString
-            CalculateFileSelection()
+            SelectedFolder = IIf(Not FolderBrowserDialog1.SelectedPath.EndsWith("\"), FolderBrowserDialog1.SelectedPath & "\", FolderBrowserDialog1.SelectedPath)
+            BackupLocationPathTextbox.Text = SelectedFolder
         End If
     End Sub
 
-    Private Sub Restore_Click(sender As Object, e As EventArgs) Handles Restore.Click
-        If SXOSDriveLetter = Nothing Then
+    Private Sub btnRestore_Click(sender As Object, e As EventArgs) Handles btnRestore.Click
+        If drive.DriveLetter = Nothing Then
             MsgBox("Please select the SXOS drive to restore to")
             Exit Sub
         Else
-            If LocationTextBox.Text = "TXNAND" Then
-
-                If BackupLocationPathTextbox.Text = "" Then
-
-                    If FolderBrowserDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
-                        FolderLocation = FolderBrowserDialog1.SelectedPath
-                        FolderString = FolderLocation
-                        If FolderString.EndsWith("\") = False Then
-                            FolderString = FolderLocation & "\"
-                        End If
-                        BackupLocationPathTextbox.Text = FolderString
-                        CalculateFileSelection()
-                    End If
-
+            Try
+                If LocationTextBox.Text = "TXNAND" Then
                     If BackupLocationPathTextbox.Text = "" Then
-                        Exit Sub
+                        If FolderBrowserDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
+                            SelectedFolder = IIf(Not FolderBrowserDialog1.SelectedPath.EndsWith("\"), FolderBrowserDialog1.SelectedPath & "\", FolderBrowserDialog1.SelectedPath)
+                            BackupLocationPathTextbox.Text = SelectedFolder
+                            CalculateFileSelection(BorR.Restore)
+                        End If
+
+                        If BackupLocationPathTextbox.Text = "" Then
+                            Exit Sub
+                        Else
+                            RestoreCheck()
+                        End If
                     Else
                         RestoreCheck()
                     End If
-
                 Else
-
-                    RestoreCheck()
-
+                    MsgBox("The selected drive is not SXOS Emunand ready!")
+                    Exit Sub
                 End If
-            Else
-
-                MsgBox("The selected drive is not SXOS Emunand ready!")
-                Exit Sub
-
-            End If
-
+            Catch ex As Exception
+                Console.Write(ex)
+            End Try
         End If
-
     End Sub
 
 
-    Private Sub CalculateFileSelection()
-        LocationTextBox.Text = SXOSDriveVolumeName
+    Private Sub CalculateFileSelection(BorR As BorR)
+        LocationTextBox.Text = drive.DriveVolumeName
+        BinaryName = IIf(BOOT0.Checked, "BOOT0.BIN", IIf(BOOT1.Checked, "BOOT1.BIN", IIf(RAWNAND.Checked, "RAWNAND.BIN", "")))
 
-        If BOOT0.Checked = True Then
-            Backupcommand = "-backup " + SXOSDrivePhysicalName + " " + """" + FolderString + "BOOT0.BIN" + """ " + "2 8192"
-            RestoreCommand = "-restore " + SXOSDrivePhysicalName + " " + """" + FolderString + "BOOT0.BIN" + """ " + "2"
-            BinaryName = "BOOT0.BIN"
-            BinaryFileSize = 4194304
-        End If
+        Dim cmd = String.Format("-{0} {1} ""{2}"" {3} {4}", BorR.ToString,
+                                                            drive.DrivePhysicalName,
+                                                            SelectedFolder & BinaryName,
+                                                            IIf(BOOT0.Checked, "2", IIf(BOOT1.Checked, "8194", IIf(RAWNAND.Checked, "16386", ""))),
+                                                            IIf(BorR = BorR.Backup, IIf(BOOT0.Checked, "8192", IIf(BOOT1.Checked, "8192", IIf(RAWNAND.Checked, "61071360", ""))), ""))
 
-        If BOOT1.Checked = True Then
-            Backupcommand = "-backup " + SXOSDrivePhysicalName + " " + """" + FolderString + "BOOT1.BIN" + """ " + "8194 8192"
-            RestoreCommand = "-restore " + SXOSDrivePhysicalName + " " + """" + FolderString + "BOOT1.BIN" + """ " + "8194"
-            BinaryName = "BOOT1.BIN"
-            BinaryFileSize = 4194304
-        End If
+        'If BOOT0.Checked = True Then
+        '    Backupcommand = "-backup " + drive.DrivePhysicalName + " " + """" + SelectedFolder + "BOOT0.BIN" + """ " + "2 8192"
+        '    RestoreCommand = "-restore " + drive.DrivePhysicalName + " " + """" + SelectedFolder + "BOOT0.BIN" + """ " + "2"
+        '    BinaryName = "BOOT0.BIN"
+        '    BinaryFileSize = 4194304
+        'End If
 
-        If RAWNAND.Checked = True Then
-            Backupcommand = "-backup " + SXOSDrivePhysicalName + " " + """" + FolderString + "RAWNAND.BIN" + """ " + "16386 61071360"
-            RestoreCommand = "-restore " + SXOSDrivePhysicalName + " " + """" + FolderString + "RAWNAND.BIN" + """ " + "16386"
-            BinaryName = "RAWNAND.BIN"
-            BinaryFileSize = 31268536320
-        End If
+        'If BOOT1.Checked = True Then
+        '    Backupcommand = "-backup " + drive.DrivePhysicalName + " " + """" + SelectedFolder + "BOOT1.BIN" + """ " + "8194 8192"
+        '    RestoreCommand = "-restore " + drive.DrivePhysicalName + " " + """" + SelectedFolder + "BOOT1.BIN" + """ " + "8194"
+        '    BinaryName = "BOOT1.BIN"
+        '    BinaryFileSize = 4194304
+        'End If
 
-        BackupPathDebug.Text = Backupcommand
-        RestorePathDebug.Text = RestoreCommand
+        'If RAWNAND.Checked = True Then
+        '    Backupcommand = "-backup " + drive.DrivePhysicalName + " " + """" + SelectedFolder + "RAWNAND.BIN" + """ " + "16386 61071360"
+        '    RestoreCommand = "-restore " + drive.DrivePhysicalName + " " + """" + SelectedFolder + "RAWNAND.BIN" + """ " + "16386"
+        '    BinaryName = "RAWNAND.BIN"
+        '    BinaryFileSize = 31268536320
+        'End If
 
+        'Console.WriteLine("Backup Command: " & Backupcommand)
+        'Console.WriteLine("Restore Command: " & RestoreCommand)
+
+        Console.WriteLine(cmd)
     End Sub
-
-    Dim DoubleBytes As Double
-    Private this As Object
 
     Public Function FormatBytes(ByVal BytesCaller As ULong) As String
-
         Try
+            Dim DoubleBytes As Double
             Select Case BytesCaller
                 Case Is >= 1099511627776
                     DoubleBytes = CDbl(BytesCaller / 1099511627776) 'TB
@@ -500,23 +442,23 @@ Public Class frmMain
                 Case Else
                     Return ""
             End Select
-        Catch
+        Catch ex As Exception 'TODO: How do you want to handle if this messes up?
             Return ""
+            Console.WriteLine(ex)
         End Try
-
     End Function
 
-    Private Sub Cancel_Click(sender As Object, e As EventArgs) Handles Cancel.Click
+    Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
 
         KillProcess()
         ProgressBar1.Value = 0
         FileSizeTextBox.Text = " "
         CanceledOperation = 1
-        Cancel.Enabled = False
-        Restore.Enabled = True
-        Backup.Enabled = True
-        Browse.Enabled = True
-        RefreshDrives.Enabled = True
+        btnCancel.Enabled = False
+        btnRestore.Enabled = True
+        btnBackup.Enabled = True
+        btnBrowse.Enabled = True
+        btnRefreshDrives.Enabled = True
         lvDriveInfo.Enabled = True
         BOOT0.Enabled = True
         BOOT1.Enabled = True
@@ -529,17 +471,17 @@ Public Class frmMain
         Application.DoEvents()
 
         If RAWNAND.Checked = True Then
-            Cancel.Enabled = True
-            Restore.Enabled = False
-            Backup.Enabled = False
-            Browse.Enabled = False
-            RefreshDrives.Enabled = False
+            btnCancel.Enabled = True
+            btnRestore.Enabled = False
+            btnBackup.Enabled = False
+            btnBrowse.Enabled = False
+            btnRefreshDrives.Enabled = False
             lvDriveInfo.Enabled = False
             BOOT0.Enabled = False
             BOOT1.Enabled = False
             RAWNAND.Enabled = False
         Else
-            Cancel.Enabled = False
+            btnCancel.Enabled = False
         End If
 
         Dim ConvertedBinaryFileSize As Long
@@ -547,12 +489,12 @@ Public Class frmMain
         ProgressBar1.Maximum = CInt(ConvertedBinaryFileSize)
 
         Dim flength As Long
-        flength = FileLen(FolderString & BinaryName)
+        flength = FileLen(SelectedFolder & BinaryName)
 
         Dim percentDone As Double
 
         Do Until flength = BinaryFileSize
-            flength = FileLen(FolderString & BinaryName)
+            flength = FileLen(SelectedFolder & BinaryName)
             'TextBox5.Text = flength.ToString
             FileSizeTextBox.Text = (FormatBytes(CULng(flength.ToString)))
             ProgressBar1.Value = CInt(flength / 1024)
@@ -574,11 +516,11 @@ Public Class frmMain
         ProgressBar1.Value = 0
         FileSizeTextBox.Text = " "
         Percent.Text = " "
-        Cancel.Enabled = False
-        Restore.Enabled = True
-        Backup.Enabled = True
-        Browse.Enabled = True
-        RefreshDrives.Enabled = True
+        btnCancel.Enabled = False
+        btnRestore.Enabled = True
+        btnBackup.Enabled = True
+        btnBrowse.Enabled = True
+        btnRefreshDrives.Enabled = True
         lvDriveInfo.Enabled = True
         BOOT0.Enabled = True
         BOOT1.Enabled = True
@@ -607,7 +549,6 @@ Public Class frmMain
         Next
     End Sub
 
-
     Public Sub MyRestoreProgress()
 
         Dim Finished As Integer
@@ -615,18 +556,18 @@ Public Class frmMain
         'Dim psList() As Process
 
 
-        If RAWNAND.Checked = True Then
-            Cancel.Enabled = True
-            Restore.Enabled = False
-            Backup.Enabled = False
-            Browse.Enabled = False
-            RefreshDrives.Enabled = False
+        If RAWNAND.Checked Then
+            btnCancel.Enabled = True
+            btnRestore.Enabled = False
+            btnBackup.Enabled = False
+            btnBrowse.Enabled = False
+            btnRefreshDrives.Enabled = False
             lvDriveInfo.Enabled = False
             BOOT0.Enabled = False
             BOOT1.Enabled = False
             RAWNAND.Enabled = False
         Else
-            Cancel.Enabled = False
+            btnCancel.Enabled = False
         End If
 
 
@@ -635,48 +576,32 @@ Public Class frmMain
 
 
 
-        Do Until Finished = 1
-
-            p = Process.GetProcessesByName("secinspect")
-            If p.Count > 0 Then
-                ' Process is running
-                Finished = 0
-            Else
-                ' Process is not running
-                Finished = 1
-            End If
-
-        Loop
+        'Do Until Finished = 1
+        '    p = Process.GetProcessesByName("secinspect")
+        '    If p.Count > 0 Then
+        '        ' Process is running
+        '        Finished = 0
+        '    Else
+        '        ' Process is not running
+        '        Finished = 1
+        '    End If
+        'Loop
 
 
         ProgressBar1.Value = 0
         FileSizeTextBox.Text = " "
         Percent.Text = " "
-        Cancel.Enabled = False
-        Restore.Enabled = True
-        Backup.Enabled = True
-        Browse.Enabled = True
-        RefreshDrives.Enabled = True
+        btnCancel.Enabled = False
+        btnRestore.Enabled = True
+        btnBackup.Enabled = True
+        btnBrowse.Enabled = True
+        btnRefreshDrives.Enabled = True
         lvDriveInfo.Enabled = True
         BOOT0.Enabled = True
         BOOT1.Enabled = True
         RAWNAND.Enabled = True
         MsgBox("Restore now complete")
         ProgressBar1.Style = ProgressBarStyle.Blocks
-
-
-    End Sub
-
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-
-        If ToggleDebug = False Then
-
-            ToggleDebug = True
-            Me.Height = Me.Height + 100
-        Else
-            ToggleDebug = False
-            Me.Height = Me.Height - 100
-        End If
 
     End Sub
 End Class

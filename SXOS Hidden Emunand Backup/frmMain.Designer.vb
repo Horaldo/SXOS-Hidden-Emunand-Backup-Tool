@@ -23,7 +23,7 @@ Partial Class frmMain
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMain))
-        Me.RefreshDrives = New System.Windows.Forms.Button()
+        Me.btnRefreshDrives = New System.Windows.Forms.Button()
         Me.lvDriveInfo = New System.Windows.Forms.ListView()
         Me._hidden = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.Partition = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
@@ -33,7 +33,7 @@ Partial Class frmMain
         Me.FileSystem = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.DriveSize = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.FreeSpace = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.Backup = New System.Windows.Forms.Button()
+        Me.btnBackup = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.BOOT0 = New System.Windows.Forms.RadioButton()
         Me.BOOT1 = New System.Windows.Forms.RadioButton()
@@ -43,36 +43,36 @@ Partial Class frmMain
         Me.RAWNAND = New System.Windows.Forms.RadioButton()
         Me.TextBox3 = New System.Windows.Forms.TextBox()
         Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
-        Me.Cancel = New System.Windows.Forms.Button()
-        Me.Restore = New System.Windows.Forms.Button()
+        Me.btnCancel = New System.Windows.Forms.Button()
+        Me.btnRestore = New System.Windows.Forms.Button()
         Me.FileSizeTextBox = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        Me.Browse = New System.Windows.Forms.Button()
+        Me.btnBrowse = New System.Windows.Forms.Button()
         Me.BackupLocationPathTextbox = New System.Windows.Forms.TextBox()
         Me.SaveLocLabel = New System.Windows.Forms.Label()
         Me.Percent = New System.Windows.Forms.Label()
-        Me.WarningLabel = New System.Windows.Forms.Label()
         Me.RestorePathDebug = New System.Windows.Forms.TextBox()
-        Me.Button1 = New System.Windows.Forms.Button()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.BackupPathDebug = New System.Windows.Forms.TextBox()
+        Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
         Me.GroupBox1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.StatusStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
-        'RefreshDrives
+        'btnRefreshDrives
         '
-        Me.RefreshDrives.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.RefreshDrives.Location = New System.Drawing.Point(531, 213)
-        Me.RefreshDrives.Margin = New System.Windows.Forms.Padding(2)
-        Me.RefreshDrives.Name = "RefreshDrives"
-        Me.RefreshDrives.Size = New System.Drawing.Size(58, 27)
-        Me.RefreshDrives.TabIndex = 1
-        Me.RefreshDrives.Text = "Refresh"
-        Me.RefreshDrives.UseVisualStyleBackColor = True
+        Me.btnRefreshDrives.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnRefreshDrives.Location = New System.Drawing.Point(531, 213)
+        Me.btnRefreshDrives.Margin = New System.Windows.Forms.Padding(2)
+        Me.btnRefreshDrives.Name = "btnRefreshDrives"
+        Me.btnRefreshDrives.Size = New System.Drawing.Size(58, 27)
+        Me.btnRefreshDrives.TabIndex = 1
+        Me.btnRefreshDrives.Text = "Refresh"
+        Me.btnRefreshDrives.UseVisualStyleBackColor = True
         '
         'lvDriveInfo
         '
@@ -80,6 +80,7 @@ Partial Class frmMain
         Me.lvDriveInfo.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me._hidden, Me.Partition, Me.ParentDrive, Me.DriveType, Me.VolumeName, Me.FileSystem, Me.DriveSize, Me.FreeSpace})
         Me.lvDriveInfo.FullRowSelect = True
         Me.lvDriveInfo.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
+        Me.lvDriveInfo.HideSelection = False
         Me.lvDriveInfo.Location = New System.Drawing.Point(18, 39)
         Me.lvDriveInfo.Margin = New System.Windows.Forms.Padding(2)
         Me.lvDriveInfo.MultiSelect = False
@@ -135,14 +136,14 @@ Partial Class frmMain
         Me.FreeSpace.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.FreeSpace.Width = 105
         '
-        'Backup
+        'btnBackup
         '
-        Me.Backup.Location = New System.Drawing.Point(248, 315)
-        Me.Backup.Name = "Backup"
-        Me.Backup.Size = New System.Drawing.Size(61, 30)
-        Me.Backup.TabIndex = 4
-        Me.Backup.Text = "Backup"
-        Me.Backup.UseVisualStyleBackColor = True
+        Me.btnBackup.Location = New System.Drawing.Point(248, 315)
+        Me.btnBackup.Name = "btnBackup"
+        Me.btnBackup.Size = New System.Drawing.Size(61, 30)
+        Me.btnBackup.TabIndex = 4
+        Me.btnBackup.Text = "Backup"
+        Me.btnBackup.UseVisualStyleBackColor = True
         '
         'Label1
         '
@@ -232,24 +233,24 @@ Partial Class frmMain
         Me.ProgressBar1.Size = New System.Drawing.Size(252, 23)
         Me.ProgressBar1.TabIndex = 17
         '
-        'Cancel
+        'btnCancel
         '
-        Me.Cancel.Enabled = False
-        Me.Cancel.Location = New System.Drawing.Point(442, 315)
-        Me.Cancel.Name = "Cancel"
-        Me.Cancel.Size = New System.Drawing.Size(58, 30)
-        Me.Cancel.TabIndex = 20
-        Me.Cancel.Text = "Cancel"
-        Me.Cancel.UseVisualStyleBackColor = True
+        Me.btnCancel.Enabled = False
+        Me.btnCancel.Location = New System.Drawing.Point(442, 315)
+        Me.btnCancel.Name = "btnCancel"
+        Me.btnCancel.Size = New System.Drawing.Size(58, 30)
+        Me.btnCancel.TabIndex = 20
+        Me.btnCancel.Text = "Cancel"
+        Me.btnCancel.UseVisualStyleBackColor = True
         '
-        'Restore
+        'btnRestore
         '
-        Me.Restore.Location = New System.Drawing.Point(349, 315)
-        Me.Restore.Name = "Restore"
-        Me.Restore.Size = New System.Drawing.Size(56, 30)
-        Me.Restore.TabIndex = 15
-        Me.Restore.Text = "Restore"
-        Me.Restore.UseVisualStyleBackColor = True
+        Me.btnRestore.Location = New System.Drawing.Point(349, 315)
+        Me.btnRestore.Name = "btnRestore"
+        Me.btnRestore.Size = New System.Drawing.Size(56, 30)
+        Me.btnRestore.TabIndex = 15
+        Me.btnRestore.Text = "Restore"
+        Me.btnRestore.UseVisualStyleBackColor = True
         '
         'FileSizeTextBox
         '
@@ -288,14 +289,14 @@ Partial Class frmMain
         Me.PictureBox1.TabIndex = 23
         Me.PictureBox1.TabStop = False
         '
-        'Browse
+        'btnBrowse
         '
-        Me.Browse.Location = New System.Drawing.Point(188, 452)
-        Me.Browse.Name = "Browse"
-        Me.Browse.Size = New System.Drawing.Size(56, 20)
-        Me.Browse.TabIndex = 12
-        Me.Browse.Text = "Browse"
-        Me.Browse.UseVisualStyleBackColor = True
+        Me.btnBrowse.Location = New System.Drawing.Point(531, 426)
+        Me.btnBrowse.Name = "btnBrowse"
+        Me.btnBrowse.Size = New System.Drawing.Size(58, 20)
+        Me.btnBrowse.TabIndex = 12
+        Me.btnBrowse.Text = "Browse"
+        Me.btnBrowse.UseVisualStyleBackColor = True
         '
         'BackupLocationPathTextbox
         '
@@ -324,19 +325,6 @@ Partial Class frmMain
         Me.Percent.Size = New System.Drawing.Size(0, 16)
         Me.Percent.TabIndex = 26
         '
-        'WarningLabel
-        '
-        Me.WarningLabel.AutoSize = True
-        Me.WarningLabel.BackColor = System.Drawing.SystemColors.ControlLight
-        Me.WarningLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.WarningLabel.ForeColor = System.Drawing.Color.Red
-        Me.WarningLabel.Location = New System.Drawing.Point(15, 483)
-        Me.WarningLabel.Name = "WarningLabel"
-        Me.WarningLabel.Size = New System.Drawing.Size(573, 13)
-        Me.WarningLabel.TabIndex = 27
-        Me.WarningLabel.Text = "Warning - This software is in ""alpha"" stage. Backup any important data before att" &
-    "empting a Restore"
-        '
         'RestorePathDebug
         '
         Me.RestorePathDebug.Location = New System.Drawing.Point(99, 541)
@@ -344,15 +332,6 @@ Partial Class frmMain
         Me.RestorePathDebug.ReadOnly = True
         Me.RestorePathDebug.Size = New System.Drawing.Size(484, 20)
         Me.RestorePathDebug.TabIndex = 28
-        '
-        'Button1
-        '
-        Me.Button1.Location = New System.Drawing.Point(12, 457)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(75, 23)
-        Me.Button1.TabIndex = 29
-        Me.Button1.Text = "Debug"
-        Me.Button1.UseVisualStyleBackColor = True
         '
         'Label5
         '
@@ -372,42 +351,48 @@ Partial Class frmMain
         Me.Label2.TabIndex = 33
         Me.Label2.Text = "Backup Command"
         '
-        'BackupPathDebug
+        'ToolStripStatusLabel1
         '
-        Me.BackupPathDebug.Location = New System.Drawing.Point(99, 515)
-        Me.BackupPathDebug.Name = "BackupPathDebug"
-        Me.BackupPathDebug.ReadOnly = True
-        Me.BackupPathDebug.Size = New System.Drawing.Size(484, 20)
-        Me.BackupPathDebug.TabIndex = 32
+        Me.ToolStripStatusLabel1.ForeColor = System.Drawing.Color.Red
+        Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
+        Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(528, 17)
+        Me.ToolStripStatusLabel1.Text = "Warning - This software is in ""alpha"" stage. Backup any important data before att" &
+    "empting a Restore"
+        '
+        'StatusStrip1
+        '
+        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1})
+        Me.StatusStrip1.Location = New System.Drawing.Point(0, 479)
+        Me.StatusStrip1.Name = "StatusStrip1"
+        Me.StatusStrip1.Size = New System.Drawing.Size(614, 22)
+        Me.StatusStrip1.TabIndex = 34
+        Me.StatusStrip1.Text = "StatusStrip1"
         '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(614, 501)
+        Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.Label2)
-        Me.Controls.Add(Me.BackupPathDebug)
         Me.Controls.Add(Me.Label5)
-        Me.Controls.Add(Me.Button1)
-        Me.Controls.Add(Me.RestorePathDebug)
-        Me.Controls.Add(Me.WarningLabel)
         Me.Controls.Add(Me.Percent)
         Me.Controls.Add(Me.SaveLocLabel)
         Me.Controls.Add(Me.PictureBox1)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.Label3)
-        Me.Controls.Add(Me.Cancel)
+        Me.Controls.Add(Me.btnCancel)
         Me.Controls.Add(Me.FileSizeTextBox)
         Me.Controls.Add(Me.ProgressBar1)
-        Me.Controls.Add(Me.Restore)
+        Me.Controls.Add(Me.btnRestore)
         Me.Controls.Add(Me.TextBox3)
         Me.Controls.Add(Me.GroupBox1)
-        Me.Controls.Add(Me.Browse)
+        Me.Controls.Add(Me.btnBrowse)
         Me.Controls.Add(Me.BackupLocationPathTextbox)
         Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.Backup)
+        Me.Controls.Add(Me.btnBackup)
         Me.Controls.Add(Me.lvDriveInfo)
-        Me.Controls.Add(Me.RefreshDrives)
+        Me.Controls.Add(Me.btnRefreshDrives)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(2)
@@ -418,11 +403,13 @@ Partial Class frmMain
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.StatusStrip1.ResumeLayout(False)
+        Me.StatusStrip1.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents RefreshDrives As System.Windows.Forms.Button
+    Friend WithEvents btnRefreshDrives As System.Windows.Forms.Button
     Friend WithEvents lvDriveInfo As System.Windows.Forms.ListView
     Friend WithEvents _hidden As System.Windows.Forms.ColumnHeader
     Friend WithEvents ParentDrive As System.Windows.Forms.ColumnHeader
@@ -431,7 +418,7 @@ Partial Class frmMain
     Friend WithEvents DriveSize As System.Windows.Forms.ColumnHeader
     Friend WithEvents FreeSpace As System.Windows.Forms.ColumnHeader
     Friend WithEvents FileSystem As System.Windows.Forms.ColumnHeader
-    Friend WithEvents Backup As Button
+    Friend WithEvents btnBackup As Button
     Friend WithEvents Label1 As Label
     Friend WithEvents VolumeName As ColumnHeader
     Friend WithEvents BOOT0 As RadioButton
@@ -441,21 +428,21 @@ Partial Class frmMain
     Friend WithEvents RAWNAND As RadioButton
     Friend WithEvents TextBox3 As TextBox
     Friend WithEvents ProgressBar1 As ProgressBar
-    Friend WithEvents Cancel As Button
-    Friend WithEvents Restore As Button
+    Friend WithEvents btnCancel As Button
+    Friend WithEvents btnRestore As Button
     Friend WithEvents FileSizeTextBox As TextBox
     Friend WithEvents Label3 As Label
     Friend WithEvents Label4 As Label
     Friend WithEvents LocationTextBox As TextBox
     Friend WithEvents PictureBox1 As PictureBox
-    Friend WithEvents Browse As Button
+    Friend WithEvents btnBrowse As Button
     Friend WithEvents BackupLocationPathTextbox As TextBox
     Friend WithEvents SaveLocLabel As Label
     Friend WithEvents Percent As Label
-    Friend WithEvents WarningLabel As Label
     Friend WithEvents RestorePathDebug As TextBox
-    Friend WithEvents Button1 As Button
     Friend WithEvents Label5 As Label
     Friend WithEvents Label2 As Label
     Friend WithEvents BackupPathDebug As TextBox
+    Friend WithEvents ToolStripStatusLabel1 As ToolStripStatusLabel
+    Friend WithEvents StatusStrip1 As StatusStrip
 End Class

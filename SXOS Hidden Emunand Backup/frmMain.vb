@@ -2,8 +2,6 @@
 
 Public Class frmMain
 
-    Dim bsrc As New BindingSource
-    Dim dset As New DataSet
     Dim drive As New SXOSDrive
     ReadOnly inspector As String = "secinspect.exe"
     Dim SelectedFolder As String = ""
@@ -18,11 +16,176 @@ Public Class frmMain
     ReadOnly appPath As String = Application.StartupPath()
     ReadOnly BinaryName As String = IIf(BOOT0.Checked, "BOOT0.BIN", IIf(BOOT1.Checked, "BOOT1.BIN", IIf(RAWNAND.Checked, "RAWNAND.BIN", "")))
     Dim BinaryFileSize As Long
-    Dim CanceledOperation As Integer
+    Dim CanceledOperation As Boolean
 
-    Dim ToggleDebug As Boolean
-    Dim p As Process()
+    Private Sub FrmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        Me.lvDriveInfo.View = View.Details
+
+        Dim SetupPath As String = appPath & "\" & inspector
+
+        Dim sec = My.Resources.secinspect
+
+        If System.IO.File.Exists(SetupPath) Then
+            Using sCreateMSIFile As New FileStream(SetupPath, FileMode.Create)
+                sCreateMSIFile.Write(My.Resources.secinspect, 0, My.Resources.secinspect.Length)
+            End Using
+        End If
+
+        GetDriveInfo()
+    End Sub
+
+    Private Sub FrmMain_Resize(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Resize
+
+        Dim cellWidth As Integer = 0
+        For count As UShort = 1 To 7
+            If count = 1 Then
+                cellWidth = CInt(lvDriveInfo.Width / 7)
+                cellWidth = CInt(cellWidth * 0.65)
+            ElseIf count = 2 Then
+                cellWidth = CInt(lvDriveInfo.Width / 7)
+                cellWidth = CInt(cellWidth * 1.0)
+            ElseIf count = 4 Then
+                cellWidth = CInt(lvDriveInfo.Width / 7)
+                cellWidth = CInt(cellWidth * 0.85)
+            ElseIf count = 6 Then
+                cellWidth = CInt(lvDriveInfo.Width / 7)
+                If (cellWidth - 5) > 0 Then
+                    cellWidth = cellWidth - 7
+                End If
+            Else
+                cellWidth = CInt(lvDriveInfo.Width / 7)
+            End If
+
+            lvDriveInfo.Columns(count).Width = cellWidth
+        Next
+
+    End Sub
+
+    Private Sub MyApplication_FormClosing(sender As Object, e As EventArgs) Handles Me.FormClosing
+        KillProcess()
+
+        Dim FileToDelete As String = My.Application.Info.DirectoryPath & "\" & inspector
+        If System.IO.File.Exists(FileToDelete) Then
+            Threading.Thread.Sleep(1500)
+            System.IO.File.Delete(FileToDelete)
+        End If
+        End
+
+    End Sub
+
+    Private Sub RefreshDrives_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRefreshDrives.Click
+        GetDriveInfo()
+    End Sub
+
+    Private Sub btnBrowse_Click(sender As Object, e As EventArgs) Handles btnBrowse.Click
+        If FolderBrowserDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
+            SelectedFolder = IIf(Not FolderBrowserDialog1.SelectedPath.EndsWith("\"), FolderBrowserDialog1.SelectedPath & "\", FolderBrowserDialog1.SelectedPath)
+            BackupLocationPathTextbox.Text = SelectedFolder
+        End If
+    End Sub
+
+    Private Sub btnRestore_Click(sender As Object, e As EventArgs) Handles btnRestore.Click
+        If drive.DriveLetter = Nothing Then
+            MsgBox("Please select the SXOS drive to restore to")
+            Exit Sub
+        Else
+            Try
+                If LocationTextBox.Text = "TXNAND" Then
+                    If BackupLocationPathTextbox.Text = "" Then
+                        If FolderBrowserDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
+                            SelectedFolder = IIf(Not FolderBrowserDialog1.SelectedPath.EndsWith("\"), FolderBrowserDialog1.SelectedPath & "\", FolderBrowserDialog1.SelectedPath)
+                            BackupLocationPathTextbox.Text = SelectedFolder
+                            CreateCommand(BorR.Restore)
+                        Else
+                            logger.Log("No Location was selected." & vbCrLf &
+                                       "You must select the location of the file to restore.",
+                                       Nothing,
+                                       True,
+                                       MessageBoxIcon.Information)
+                            Exit Sub
+                        End If
+
+                        If BackupLocationPathTextbox.Text = "" Then
+                            Exit Sub
+                        Else
+                            RestoreCheck()
+                        End If
+                    Else
+                        RestoreCheck()
+                    End If
+                Else
+                    MsgBox("The selected drive is not SXOS Emunand ready!")
+                    Exit Sub
+                End If
+            Catch ex As Exception
+                Console.Write(ex)
+            End Try
+        End If
+    End Sub
+
+    Private Sub Backup_Click(sender As Object, e As EventArgs) Handles btnBackup.Click
+
+        If drive.DriveLetter = Nothing Then
+            MsgBox("Please select the SXOS drive to backup!", MsgBoxStyle.Exclamation)
+            Exit Sub
+        Else
+            If LocationTextBox.Text = "TXNAND" Then
+                If BackupLocationPathTextbox.Text = "" Then
+                    If FolderBrowserDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
+                        SelectedFolder = IIf(Not FolderBrowserDialog1.SelectedPath.EndsWith("\"), FolderBrowserDialog1.SelectedPath & "\", FolderBrowserDialog1.SelectedPath)
+                        BackupLocationPathTextbox.Text = SelectedFolder
+                        CreateCommand(BorR.Backup)
+                    End If
+
+                    If BackupLocationPathTextbox.Text = "" Then
+                        Exit Sub
+                    Else
+                        OverwriteCheck()
+                    End If
+                Else
+                    OverwriteCheck()
+                End If
+            Else
+                MsgBox("The selected drive does not contain an SXOS Emunand")
+                Exit Sub
+            End If
+        End If
+    End Sub
+
+    Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
+
+        KillProcess()
+        ProgressBar1.Value = 0
+        FileSizeTextBox.Text = " "
+        CanceledOperation = True
+        btnCancel.Enabled = False
+        btnRestore.Enabled = True
+        btnBackup.Enabled = True
+        btnBrowse.Enabled = True
+        btnRefreshDrives.Enabled = True
+        lvDriveInfo.Enabled = True
+        BOOT0.Enabled = True
+        BOOT1.Enabled = True
+        RAWNAND.Enabled = True
+        Percent.Text = " "
+    End Sub
+
+    Private Sub LvDriveInfo_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lvDriveInfo.SelectedIndexChanged
+        ' The drive information for the drive selected in the ListView is synchronized each time the selection changes
+        With Me.lvDriveInfo
+            Dim selectedDriveIndex = .SelectedIndices(0)
+            drive.DriveLetter = .Items(selectedDriveIndex).SubItems(1).Text
+            drive.DrivePhysicalName = lvDriveInfo.Items(selectedDriveIndex).SubItems(2).Text.Replace(" ", "")
+            drive.DriveType = lvDriveInfo.Items(selectedDriveIndex).SubItems(3).Text
+            drive.DriveVolumeName = lvDriveInfo.Items(selectedDriveIndex).SubItems(4).Text
+            drive.DriveFileSystem = lvDriveInfo.Items(selectedDriveIndex).SubItems(5).Text
+        End With
+
+        'Update that textbox (why is it a textbox and not a label?
+        LocationTextBox.Text = drive.DriveVolumeName
+
+    End Sub
 
     Private Sub GetDriveInfo()
 
@@ -100,109 +263,6 @@ Public Class frmMain
         Next
     End Sub
 
-    Private Sub FrmMain_Resize(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Resize
-
-        Dim cellWidth As Integer = 0
-        For count As UShort = 1 To 7
-            If count = 1 Then
-                cellWidth = CInt(lvDriveInfo.Width / 7)
-                cellWidth = CInt(cellWidth * 0.65)
-            ElseIf count = 2 Then
-                cellWidth = CInt(lvDriveInfo.Width / 7)
-                cellWidth = CInt(cellWidth * 1.0)
-            ElseIf count = 4 Then
-                cellWidth = CInt(lvDriveInfo.Width / 7)
-                cellWidth = CInt(cellWidth * 0.85)
-            ElseIf count = 6 Then
-                cellWidth = CInt(lvDriveInfo.Width / 7)
-                If (cellWidth - 5) > 0 Then
-                    cellWidth = cellWidth - 7
-                End If
-            Else
-                cellWidth = CInt(lvDriveInfo.Width / 7)
-            End If
-
-            lvDriveInfo.Columns(count).Width = cellWidth
-        Next
-
-    End Sub
-
-    Private Sub RefreshDrives_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRefreshDrives.Click
-        GetDriveInfo()
-    End Sub
-
-    Private Sub FrmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
-        Me.lvDriveInfo.View = View.Details
-
-        Dim SetupPath As String = appPath & "\" & inspector
-
-        If System.IO.File.Exists(SetupPath) Then
-            Using sCreateMSIFile As New FileStream(SetupPath, FileMode.Create)
-                sCreateMSIFile.Write(My.Resources.secinspect, 0, My.Resources.secinspect.Length)
-            End Using
-        End If
-
-        GetDriveInfo()
-    End Sub
-
-    Private Sub MyApplication_FormClosing(sender As Object, e As EventArgs) Handles Me.FormClosing
-        KillProcess()
-
-        Dim FileToDelete As String = My.Application.Info.DirectoryPath & "\" & inspector
-        If System.IO.File.Exists(FileToDelete) Then
-            Threading.Thread.Sleep(1500)
-            System.IO.File.Delete(FileToDelete)
-        End If
-        End
-
-    End Sub
-
-    Private Sub LvDriveInfo_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lvDriveInfo.SelectedIndexChanged
-        ' The drive information for the drive selected in the ListView is synchronized each time the selection changes
-        With Me.lvDriveInfo
-            Dim selectedDriveIndex = .SelectedIndices(0)
-            drive.DriveLetter = .Items(selectedDriveIndex).SubItems(1).Text
-            drive.DrivePhysicalName = lvDriveInfo.Items(selectedDriveIndex).SubItems(2).Text.Replace(" ", "")
-            drive.DriveType = lvDriveInfo.Items(selectedDriveIndex).SubItems(3).Text
-            drive.DriveVolumeName = lvDriveInfo.Items(selectedDriveIndex).SubItems(4).Text
-            drive.DriveFileSystem = lvDriveInfo.Items(selectedDriveIndex).SubItems(5).Text
-        End With
-
-        'Update that textbox (why is it a textbox and not a label?
-        LocationTextBox.Text = drive.DriveVolumeName
-
-    End Sub
-
-    Private Sub Backup_Click(sender As Object, e As EventArgs) Handles btnBackup.Click
-
-        If drive.DriveLetter = Nothing Then
-            MsgBox("Please select the SXOS drive to backup!", MsgBoxStyle.Exclamation)
-            Exit Sub
-        Else
-            If LocationTextBox.Text = "TXNAND" Then
-                If BackupLocationPathTextbox.Text = "" Then
-                    If FolderBrowserDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
-                        SelectedFolder = IIf(Not FolderBrowserDialog1.SelectedPath.EndsWith("\"), FolderBrowserDialog1.SelectedPath & "\", FolderBrowserDialog1.SelectedPath)
-                        BackupLocationPathTextbox.Text = SelectedFolder
-                        CreateCommand(BorR.Backup)
-                    End If
-
-                    If BackupLocationPathTextbox.Text = "" Then
-                        Exit Sub
-                    Else
-                        OverwriteCheck()
-                    End If
-                Else
-                    OverwriteCheck()
-                End If
-            Else
-                MsgBox("The selected drive does not contain an SXOS Emunand")
-                Exit Sub
-            End If
-        End If
-    End Sub
-
     Private Sub OverwriteCheck()
         If My.Computer.FileSystem.FileExists(BackupLocationPathTextbox.Text & BinaryName) Then
             Select Case MsgBox(BinaryName & " already exists. Overwrite?", MsgBoxStyle.YesNo, "FILE ALREADY EXISTS")
@@ -267,46 +327,6 @@ Public Class frmMain
         MyRestoreProgress()
     End Sub
 
-    Private Sub btnBrowse_Click(sender As Object, e As EventArgs) Handles btnBrowse.Click
-        If FolderBrowserDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
-            SelectedFolder = IIf(Not FolderBrowserDialog1.SelectedPath.EndsWith("\"), FolderBrowserDialog1.SelectedPath & "\", FolderBrowserDialog1.SelectedPath)
-            BackupLocationPathTextbox.Text = SelectedFolder
-        End If
-    End Sub
-
-    Private Sub btnRestore_Click(sender As Object, e As EventArgs) Handles btnRestore.Click
-        If drive.DriveLetter = Nothing Then
-            MsgBox("Please select the SXOS drive to restore to")
-            Exit Sub
-        Else
-            Try
-                If LocationTextBox.Text = "TXNAND" Then
-                    If BackupLocationPathTextbox.Text = "" Then
-                        If FolderBrowserDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
-                            SelectedFolder = IIf(Not FolderBrowserDialog1.SelectedPath.EndsWith("\"), FolderBrowserDialog1.SelectedPath & "\", FolderBrowserDialog1.SelectedPath)
-                            BackupLocationPathTextbox.Text = SelectedFolder
-                            CreateCommand(BorR.Restore)
-                        End If
-
-                        If BackupLocationPathTextbox.Text = "" Then
-                            Exit Sub
-                        Else
-                            RestoreCheck()
-                        End If
-                    Else
-                        RestoreCheck()
-                    End If
-                Else
-                    MsgBox("The selected drive is not SXOS Emunand ready!")
-                    Exit Sub
-                End If
-            Catch ex As Exception
-                Console.Write(ex)
-            End Try
-        End If
-    End Sub
-
-
     Private Function CreateCommand(BorR As BorR) As String
         Dim cmd = String.Format("-{0} {1} ""{2}"" {3} {4}",
             BorR.ToString,
@@ -347,24 +367,6 @@ Public Class frmMain
         End Try
     End Function
 
-    Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
-
-        KillProcess()
-        ProgressBar1.Value = 0
-        FileSizeTextBox.Text = " "
-        CanceledOperation = 1
-        btnCancel.Enabled = False
-        btnRestore.Enabled = True
-        btnBackup.Enabled = True
-        btnBrowse.Enabled = True
-        btnRefreshDrives.Enabled = True
-        lvDriveInfo.Enabled = True
-        BOOT0.Enabled = True
-        BOOT1.Enabled = True
-        RAWNAND.Enabled = True
-        Percent.Text = " "
-    End Sub
-
     Private Sub Fileprogress()
         Threading.Thread.Sleep(1000)
         Application.DoEvents()
@@ -402,8 +404,8 @@ Public Class frmMain
             Percent.Text = CType(percentDone, String) + " % Complete"
 
 
-            If CanceledOperation = 1 Then
-                CanceledOperation = 0
+            If CanceledOperation Then
+                CanceledOperation = False
                 Exit Sub
             End If
         Loop

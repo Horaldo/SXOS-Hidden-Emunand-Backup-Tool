@@ -2,8 +2,14 @@
   "ExpandedNodes": [
     "",
     "\\SXOS Hidden Emunand Backup",
-    "\\SXOS Hidden Emunand Backup\\My Project"
+    "\\SXOS Hidden Emunand Backup\\Models",
+    "\\SXOS Hidden Emunand Backup\\My Project",
+    "\\SXOS Hidden Emunand Backup\\obj",
+    "\\SXOS Hidden Emunand Backup\\obj\\Debug",
+    "\\SXOS Hidden Emunand Backup\\obj\\Release",
+    "\\SXOS Hidden Emunand Backup\\obj\\Release\\TempPE",
+    "\\SXOS Hidden Emunand Backup\\Resources"
   ],
-  "SelectedNode": "\\SXOS Hidden Emunand Backup\\frmMain.vb",
+  "SelectedNode": "\\SXOS Hidden Emunand Backup",
   "PreviewInSolutionExplorer": false
 }

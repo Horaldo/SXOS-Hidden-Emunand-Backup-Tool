@@ -314,7 +314,7 @@ Public Class frmMain
             .StartInfo.Arguments = Backupcommand
             .StartInfo.Verb = "runas"
             .StartInfo.RedirectStandardOutput = True
-            .StartInfo.CreateNoWindow = False
+            .StartInfo.CreateNoWindow = True
             .StartInfo.UseShellExecute = False
 
         End With
@@ -388,7 +388,7 @@ Public Class frmMain
             .StartInfo.Arguments = RestoreCommand
             .StartInfo.Verb = "runas"
             .StartInfo.RedirectStandardOutput = True
-            .StartInfo.CreateNoWindow = False
+            .StartInfo.CreateNoWindow = True
             .StartInfo.UseShellExecute = False
 
         End With

@@ -474,21 +474,21 @@ Public Class frmMain
 
         If BOOT0.Checked = True Then
             Backupcommand = "-backup " + SXOSDrivePhysicalName + " " + """" + FolderString + "BOOT0.BIN" + """ " + "2 8192"
-            RestoreCommand = "-restore " + SXOSDrivePhysicalName + " " + """" + FolderString + "BOOT0.BIN" + """ " + "2"
+            RestoreCommand = "-restore " + SXOSDrivePhysicalName + " " + """" + FolderString + "BOOT0.BIN" + """ " + "2 CONFIRM"
             BinaryName = "BOOT0.BIN"
             BinaryFileSize = 4194304
         End If
 
         If BOOT1.Checked = True Then
             Backupcommand = "-backup " + SXOSDrivePhysicalName + " " + """" + FolderString + "BOOT1.BIN" + """ " + "8194 8192"
-            RestoreCommand = "-restore " + SXOSDrivePhysicalName + " " + """" + FolderString + "BOOT1.BIN" + """ " + "8194"
+            RestoreCommand = "-restore " + SXOSDrivePhysicalName + " " + """" + FolderString + "BOOT1.BIN" + """ " + "8194 CONFIRM"
             BinaryName = "BOOT1.BIN"
             BinaryFileSize = 4194304
         End If
 
         If RAWNAND.Checked = True Then
             Backupcommand = "-backup " + SXOSDrivePhysicalName + " " + """" + FolderString + "RAWNAND.BIN" + """ " + "16386 61071360"
-            RestoreCommand = "-restore " + SXOSDrivePhysicalName + " " + """" + FolderString + "RAWNAND.BIN" + """ " + "16386"
+            RestoreCommand = "-restore " + SXOSDrivePhysicalName + " " + """" + FolderString + "RAWNAND.BIN" + """ " + "16386 CONFIRM"
             BinaryName = "RAWNAND.BIN"
             BinaryFileSize = 31268536320
         End If

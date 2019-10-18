@@ -1,10 +1,10 @@
 ﻿Imports System.IO
 
-Public Class Logger
+Friend Class Logger
     ReadOnly strFile As String = "logger.txt"
     Dim fileExists As Boolean = File.Exists(strFile)
 
-    Public Sub SetupLogFile()
+    Friend Sub SetupLogFile()
         Dim Message As String = "SXOS Loggine Output File for SXOS Hidden Emunand Backup"
 
         If Not fileExists Then
@@ -18,7 +18,7 @@ Public Class Logger
         End If
     End Sub
 
-    Public Sub Log(ByRef message As String, Optional ex As Exception = Nothing, Optional showUser As Boolean = False, Optional severity As MessageBoxIcon = MessageBoxIcon.None)
+    Friend Sub Log(ByRef message As String, Optional ex As Exception = Nothing, Optional showUser As Boolean = False, Optional severity As MessageBoxIcon = MessageBoxIcon.None)
         Console.WriteLine(message)
 
         If Not fileExists Then

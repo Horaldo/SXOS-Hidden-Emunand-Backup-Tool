@@ -72,18 +72,3 @@ C:\Users\Admin\Documents\GitHub\SXOS-Hidden-Emunand-Backup-Tool\SXOS Hidden Emun
 C:\Users\Admin\Documents\GitHub\SXOS-Hidden-Emunand-Backup-Tool\SXOS Hidden Emunand Backup\obj\Debug\SXOSHiddenEmunandBackupTool.frmMain.resources
 C:\Users\Admin\Documents\GitHub\SXOS-Hidden-Emunand-Backup-Tool\SXOS Hidden Emunand Backup\obj\Debug\SXOSHiddenEmunandBackupTool.Resources.resources
 C:\Users\Admin\Documents\GitHub\SXOS-Hidden-Emunand-Backup-Tool\SXOS Hidden Emunand Backup\obj\Debug\SXOS Hidden Emunand Backup.vbproj.GenerateResource.Cache
-C:\Users\andrewp\source\repos\SXOS-Hidden-Emunand-Backup-Tool\SXOS Hidden Emunand Backup\bin\Debug\SXOS Hidden Emunand Backup Tool.exe.config
-C:\Users\andrewp\source\repos\SXOS-Hidden-Emunand-Backup-Tool\SXOS Hidden Emunand Backup\bin\Debug\SXOS Hidden Emunand Backup Tool.exe
-C:\Users\andrewp\source\repos\SXOS-Hidden-Emunand-Backup-Tool\SXOS Hidden Emunand Backup\bin\Debug\SXOS Hidden Emunand Backup Tool.pdb
-C:\Users\andrewp\source\repos\SXOS-Hidden-Emunand-Backup-Tool\SXOS Hidden Emunand Backup\bin\Debug\SXOS Hidden Emunand Backup Tool.xml
-C:\Users\andrewp\source\repos\SXOS-Hidden-Emunand-Backup-Tool\SXOS Hidden Emunand Backup\bin\Debug\Interop.Scripting.dll
-C:\Users\andrewp\source\repos\SXOS-Hidden-Emunand-Backup-Tool\SXOS Hidden Emunand Backup\obj\Debug\Interop.Scripting.dll
-C:\Users\andrewp\source\repos\SXOS-Hidden-Emunand-Backup-Tool\SXOS Hidden Emunand Backup\obj\Debug\SXOS Hidden Emunand Backup.vbproj.ResolveComReference.cache
-C:\Users\andrewp\source\repos\SXOS-Hidden-Emunand-Backup-Tool\SXOS Hidden Emunand Backup\obj\Debug\SXOSHiddenEmunandBackupTool.frmMain.resources
-C:\Users\andrewp\source\repos\SXOS-Hidden-Emunand-Backup-Tool\SXOS Hidden Emunand Backup\obj\Debug\SXOSHiddenEmunandBackupTool.Resources.resources
-C:\Users\andrewp\source\repos\SXOS-Hidden-Emunand-Backup-Tool\SXOS Hidden Emunand Backup\obj\Debug\SXOS Hidden Emunand Backup.vbproj.GenerateResource.cache
-C:\Users\andrewp\source\repos\SXOS-Hidden-Emunand-Backup-Tool\SXOS Hidden Emunand Backup\obj\Debug\SXOS Hidden Emunand Backup.vbproj.CoreCompileInputs.cache
-C:\Users\andrewp\source\repos\SXOS-Hidden-Emunand-Backup-Tool\SXOS Hidden Emunand Backup\obj\Debug\SXOS Hidden Emunand Backup Tool.exe
-C:\Users\andrewp\source\repos\SXOS-Hidden-Emunand-Backup-Tool\SXOS Hidden Emunand Backup\obj\Debug\SXOS Hidden Emunand Backup Tool.xml
-C:\Users\andrewp\source\repos\SXOS-Hidden-Emunand-Backup-Tool\SXOS Hidden Emunand Backup\obj\Debug\SXOS Hidden Emunand Backup Tool.pdb
-C:\Users\andrewp\source\repos\SXOS-Hidden-Emunand-Backup-Tool\SXOS Hidden Emunand Backup\obj\Debug\SXOS Hidden Emunand Backup.vbprojAssemblyReference.cache

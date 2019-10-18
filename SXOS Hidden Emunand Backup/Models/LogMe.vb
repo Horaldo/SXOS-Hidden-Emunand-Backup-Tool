@@ -1,8 +1,8 @@
 ﻿Imports System.IO
 
-Friend Class Logger
+Public Class LogMe
     ReadOnly strFile As String = "logger.txt"
-    Dim fileExists As Boolean = File.Exists(strFile)
+    ReadOnly fileExists As Boolean = File.Exists(strFile)
 
     Friend Sub SetupLogFile()
         Dim Message As String = "SXOS Loggine Output File for SXOS Hidden Emunand Backup"
@@ -34,7 +34,5 @@ Friend Class Logger
         If showUser Then
             MessageBox.Show(message, "ALERT - MESSAGE", MessageBoxButtons.OK, severity)
         End If
-
-
     End Sub
 End Class

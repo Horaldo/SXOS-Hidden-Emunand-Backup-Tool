@@ -8,6 +8,8 @@ Public Class frmMain
     ReadOnly inspector As String = "secinspect.exe"
     Dim SelectedFolder As String = ""
 
+    Dim logger As New LogMe
+
     Enum BorR
         Backup
         Restore
@@ -157,32 +159,19 @@ Public Class frmMain
     End Sub
 
     Private Sub LvDriveInfo_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lvDriveInfo.SelectedIndexChanged
+        ' The drive information for the drive selected in the ListView is synchronized each time the selection changes
         With Me.lvDriveInfo
-            Dim i As Integer
-            For Each item As ListViewItem In lvDriveInfo.SelectedItems
-                i = item.Index
-            Next
-
-            Dim innercounter As Integer = 0
-            For Each subItem As ListViewItem.ListViewSubItem In lvDriveInfo.Items(i).SubItems
-                Dim myString As String = lvDriveInfo.Items(i).SubItems(innercounter).Text
-
-                'Select case to select which colunm of data you want to store in variables drom listview.
-                Select Case innercounter
-                    Case 1
-                        drive.DriveLetter = myString
-                    Case 2
-                        drive.DrivePhysicalName = myString.Replace(" ", "")
-                    Case 3
-                        drive.DriveType = myString
-                    Case 4
-                        drive.DriveVolumeName = myString
-                    Case 5
-                        drive.DriveFileSystem = myString
-                End Select
-                innercounter += 1
-            Next
+            Dim selectedDriveIndex = .SelectedIndices(0)
+            drive.DriveLetter = .Items(selectedDriveIndex).SubItems(1).Text
+            drive.DrivePhysicalName = lvDriveInfo.Items(selectedDriveIndex).SubItems(2).Text.Replace(" ", "")
+            drive.DriveType = lvDriveInfo.Items(selectedDriveIndex).SubItems(3).Text
+            drive.DriveVolumeName = lvDriveInfo.Items(selectedDriveIndex).SubItems(4).Text
+            drive.DriveFileSystem = lvDriveInfo.Items(selectedDriveIndex).SubItems(5).Text
         End With
+
+        'Update that textbox (why is it a textbox and not a label?
+        LocationTextBox.Text = drive.DriveVolumeName
+
     End Sub
 
     Private Sub Backup_Click(sender As Object, e As EventArgs) Handles btnBackup.Click
@@ -214,36 +203,32 @@ Public Class frmMain
         End If
     End Sub
 
-
     Private Sub OverwriteCheck()
         If My.Computer.FileSystem.FileExists(BackupLocationPathTextbox.Text & BinaryName) Then
             Select Case MsgBox(BinaryName & " already exists. Overwrite?", MsgBoxStyle.YesNo, "FILE ALREADY EXISTS")
                 Case MsgBoxResult.Yes
-                    DoBackup()
+                    DoBackup(CreateCommand(BorR.Backup))
                 Case MsgBoxResult.No
                     Exit Sub
             End Select
         Else
-            DoBackup()
+            DoBackup(CreateCommand(BorR.Backup))
         End If
 
     End Sub
 
     Private Sub DoBackup(cmd As String)
-        CreateCommand(BorR.Backup)
+        Dim myProcess As New Process()
 
-        Dim myProcessStartInfo As New ProcessStartInfo()
-
-        With myProcessStartInfo
+        With myProcess.StartInfo
             .FileName = inspector
             .Arguments = cmd
             '.Verb = "runas"
-
             .CreateNoWindow = True
             .UseShellExecute = False
         End With
 
-        Process.Start(myProcessStartInfo)
+        myProcess.Start()
 
         Fileprogress()
     End Sub
@@ -252,7 +237,7 @@ Public Class frmMain
         If My.Computer.FileSystem.FileExists(BackupLocationPathTextbox.Text & BinaryName) Then
             Select Case MsgBox("Are you sure you want to restore " & BinaryName & " to " & LocationTextBox.Text & "?", MsgBoxStyle.YesNo, "CONFIRM RESTORE")
                 Case MsgBoxResult.Yes
-                    DoRestore()
+                    DoRestore(CreateCommand(BorR.Restore))
                 Case MsgBoxResult.No
                     Exit Sub
             End Select
@@ -262,25 +247,21 @@ Public Class frmMain
     End Sub
 
     Private Sub DoRestore(cmd As String)
-        CreateCommand(BorR.Restore)
-
         Dim myProcess As New Process()
 
         With myProcess.StartInfo
             .FileName = inspector
             .Arguments = cmd
-            '.Verb = "runas"
             .Verb = "runas"
             .CreateNoWindow = False
             .UseShellExecute = True
-
             .RedirectStandardOutput = True
         End With
 
         myProcess.Start()
 
         For Each ln As String In myProcess.StandardOutput.ReadToEnd.Split(CChar(vbLf))
-            Logger.Log(ln)
+            logger.Log(ln)
         Next
 
         MyRestoreProgress()
@@ -327,8 +308,6 @@ Public Class frmMain
 
 
     Private Function CreateCommand(BorR As BorR) As String
-        LocationTextBox.Text = drive.DriveVolumeName
-
         Dim cmd = String.Format("-{0} {1} ""{2}"" {3} {4}",
             BorR.ToString,
             drive.DrivePhysicalName,

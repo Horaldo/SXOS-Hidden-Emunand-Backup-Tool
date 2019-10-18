@@ -59,14 +59,15 @@ Partial Class frmMain
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.BackupPathDebug = New System.Windows.Forms.TextBox()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.GroupBox1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'RefreshDrives
         '
-        Me.RefreshDrives.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.RefreshDrives.Location = New System.Drawing.Point(531, 213)
+        Me.RefreshDrives.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.RefreshDrives.Location = New System.Drawing.Point(523, 203)
         Me.RefreshDrives.Margin = New System.Windows.Forms.Padding(2)
         Me.RefreshDrives.Name = "RefreshDrives"
         Me.RefreshDrives.Size = New System.Drawing.Size(58, 27)
@@ -80,7 +81,7 @@ Partial Class frmMain
         Me.lvDriveInfo.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me._hidden, Me.Partition, Me.ParentDrive, Me.DriveType, Me.VolumeName, Me.FileSystem, Me.DriveSize, Me.FreeSpace})
         Me.lvDriveInfo.FullRowSelect = True
         Me.lvDriveInfo.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
-        Me.lvDriveInfo.Location = New System.Drawing.Point(18, 39)
+        Me.lvDriveInfo.Location = New System.Drawing.Point(10, 39)
         Me.lvDriveInfo.Margin = New System.Windows.Forms.Padding(2)
         Me.lvDriveInfo.MultiSelect = False
         Me.lvDriveInfo.Name = "lvDriveInfo"
@@ -380,11 +381,20 @@ Partial Class frmMain
         Me.BackupPathDebug.Size = New System.Drawing.Size(484, 20)
         Me.BackupPathDebug.TabIndex = 32
         '
+        'TextBox1
+        '
+        Me.TextBox1.Location = New System.Drawing.Point(99, 560)
+        Me.TextBox1.Multiline = True
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Size = New System.Drawing.Size(484, 289)
+        Me.TextBox1.TabIndex = 34
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(614, 501)
+        Me.ClientSize = New System.Drawing.Size(598, 861)
+        Me.Controls.Add(Me.TextBox1)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.BackupPathDebug)
         Me.Controls.Add(Me.Label5)
@@ -458,4 +468,5 @@ Partial Class frmMain
     Friend WithEvents Label5 As Label
     Friend WithEvents Label2 As Label
     Friend WithEvents BackupPathDebug As TextBox
+    Friend WithEvents TextBox1 As TextBox
 End Class

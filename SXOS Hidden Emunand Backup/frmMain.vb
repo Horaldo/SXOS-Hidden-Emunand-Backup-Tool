@@ -141,14 +141,14 @@ Public Class frmMain
 
     Private Sub FrmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        Dim SetupPath As String = Application.StartupPath & "\secinspect.exe"
+        'Dim SetupPath As String = Application.StartupPath & "\secinspect.exe"
 
-        If System.IO.File.Exists(SetupPath) <> True Then
+        'If System.IO.File.Exists(SetupPath) <> True Then
 
-            Using sCreateMSIFile As New FileStream(SetupPath, FileMode.Create)
-                sCreateMSIFile.Write(My.Resources.secinspect, 0, My.Resources.secinspect.Length)
-            End Using
-        End If
+        '    Using sCreateMSIFile As New FileStream(SetupPath, FileMode.Create)
+        '        sCreateMSIFile.Write(My.Resources.secinspect, 0, My.Resources.secinspect.Length)
+        '    End Using
+        'End If
 
     End Sub
 
@@ -363,20 +363,25 @@ Public Class frmMain
     Private Sub DoRestore()
         CalculateFileSelection()
 
-        Dim myProcessStartInfo As New ProcessStartInfo()
+        Dim myProcessStartInfo As New Process()
 
         With myProcessStartInfo
-            .FileName = "secinspect.exe"
-            .Arguments = RestoreCommand
-            '.Verb = "runas"
-
-            .CreateNoWindow = False
-            .UseShellExecute = True
+            .StartInfo.FileName = "secinspect.exe"
+            .StartInfo.Arguments = RestoreCommand
+            .StartInfo.Verb = "runas"
+            .StartInfo.RedirectStandardOutput = True
+            .StartInfo.CreateNoWindow = False
+            .StartInfo.UseShellExecute = False
 
         End With
+        myProcessStartInfo.Start()
 
-        Process.Start(myProcessStartInfo)
+        'Process.StartInfo.Start(myProcessStartInfo)
 
+        Dim output() As String = myProcessStartInfo.StandardOutput.ReadToEnd.Split(CChar(vbLf))
+        For Each ln As String In output
+            TextBox1.AppendText(ln & vbNewLine)
+        Next
         MyRestoreProgress()
     End Sub
 

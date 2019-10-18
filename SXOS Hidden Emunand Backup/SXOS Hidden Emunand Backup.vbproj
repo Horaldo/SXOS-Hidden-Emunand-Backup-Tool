@@ -161,7 +161,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="resources\secinspect.exe" />
+    <None Include="Resources\secinspect.exe" />
     <None Include="bin\Debug\secinspect.exe" />
     <Content Include="Hidden_Emu_Icon_03.ico" />
     <Content Include="icon_pe8_icon.ico" />

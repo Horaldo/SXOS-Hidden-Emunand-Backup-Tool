@@ -16,10 +16,8 @@ Public Class frmMain
         Restore
     End Enum
 
-    Dim Backupcommand As String
-    Dim RestoreCommand As String
-    Dim appPath As String = Application.StartupPath()
-    Dim BinaryName As String
+    ReadOnly appPath As String = Application.StartupPath()
+    ReadOnly BinaryName As String = IIf(BOOT0.Checked, "BOOT0.BIN", IIf(BOOT1.Checked, "BOOT1.BIN", IIf(RAWNAND.Checked, "RAWNAND.BIN", "")))
     Dim BinaryFileSize As Long
     Dim CanceledOperation As Integer
 
@@ -201,7 +199,7 @@ Public Class frmMain
                     If FolderBrowserDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
                         SelectedFolder = IIf(Not FolderBrowserDialog1.SelectedPath.EndsWith("\"), FolderBrowserDialog1.SelectedPath & "\", FolderBrowserDialog1.SelectedPath)
                         BackupLocationPathTextbox.Text = SelectedFolder
-                        CalculateFileSelection(BorR.Backup)
+                        CreateCommand(BorR.Backup)
                     End If
 
                     If BackupLocationPathTextbox.Text = "" Then
@@ -221,54 +219,27 @@ Public Class frmMain
 
 
     Private Sub OverwriteCheck()
-        If BOOT0.Checked Then
-            If My.Computer.FileSystem.FileExists(BackupLocationPathTextbox.Text + "BOOT0.BIN") Then
-                Select Case MsgBox("BOOT0.BIN already exists. Overwrite?", MsgBoxStyle.YesNo, "FILE ALREADY EXISTS")
-                    Case MsgBoxResult.Yes
-                        DoBackup()
-                    Case MsgBoxResult.No
-                        Exit Sub
-                End Select
-            Else
-                DoBackup()
-            End If
+        If My.Computer.FileSystem.FileExists(BackupLocationPathTextbox.Text & BinaryName) Then
+            Select Case MsgBox(BinaryName & " already exists. Overwrite?", MsgBoxStyle.YesNo, "FILE ALREADY EXISTS")
+                Case MsgBoxResult.Yes
+                    DoBackup()
+                Case MsgBoxResult.No
+                    Exit Sub
+            End Select
+        Else
+            DoBackup()
         End If
 
-        If BOOT1.Checked Then
-            If My.Computer.FileSystem.FileExists(BackupLocationPathTextbox.Text + "BOOT1.BIN") Then
-                Select Case MsgBox("BOOT1.BIN already exists. Overwrite?", MsgBoxStyle.YesNo, "FILE ALREADY EXISTS")
-                    Case MsgBoxResult.Yes
-                        DoBackup()
-                    Case MsgBoxResult.No
-                        Exit Sub
-                End Select
-            Else
-                DoBackup()
-            End If
-        End If
-
-        If RAWNAND.Checked Then
-            If My.Computer.FileSystem.FileExists(BackupLocationPathTextbox.Text + "RAWNAND.BIN") Then
-                Select Case MsgBox("RAWNAND.BIN already exists. Overwrite?", MsgBoxStyle.YesNo, "FILE ALREADY EXISTS")
-                    Case MsgBoxResult.Yes
-                        DoBackup()
-                    Case MsgBoxResult.No
-                        Exit Sub
-                End Select
-            Else
-                DoBackup()
-            End If
-        End If
     End Sub
 
-    Private Sub DoBackup()
-        CalculateFileSelection(BorR.Backup)
+    Private Sub DoBackup(cmd As String)
+        CreateCommand(BorR.Backup)
 
         Dim myProcessStartInfo As New ProcessStartInfo()
 
         With myProcessStartInfo
             .FileName = inspector
-            .Arguments = Backupcommand
+            .Arguments = cmd
             '.Verb = "runas"
 
             .CreateNoWindow = True
@@ -281,64 +252,39 @@ Public Class frmMain
     End Sub
 
     Private Sub RestoreCheck()
-        If BOOT0.Checked Then
-            If My.Computer.FileSystem.FileExists(BackupLocationPathTextbox.Text + "BOOT0.BIN") Then
-                Select Case MsgBox("Are you sure you want to restore BOOT0.BIN to " & LocationTextBox.Text & "?", MsgBoxStyle.YesNo, "CONFIRM RESTORE")
-                    Case MsgBoxResult.Yes
-                        DoRestore()
-                    Case MsgBoxResult.No
-                        Exit Sub
-                End Select
-            Else
-                MsgBox("BOOT0.BIN not found in " & BackupLocationPathTextbox.Text)
-            End If
-        End If
-
-        If BOOT1.Checked Then
-            If My.Computer.FileSystem.FileExists(BackupLocationPathTextbox.Text + "BOOT1.BIN") Then
-                Select Case MsgBox("Are you sure you want to restore BOOT1.BIN to " & LocationTextBox.Text & "?", MsgBoxStyle.YesNo, "CONFIRM RESTORE")
-                    Case MsgBoxResult.Yes
-                        DoRestore()
-                    Case MsgBoxResult.No
-                        Exit Sub
-                End Select
-            Else
-                MsgBox("BOOT1.BIN not found in " & BackupLocationPathTextbox.Text)
-            End If
-        End If
-
-        If RAWNAND.Checked Then
-            If My.Computer.FileSystem.FileExists(BackupLocationPathTextbox.Text + "RAWNAND.BIN") Then
-                Select Case MsgBox("Are you sure you want to restore RAWNAND.BIN to " & LocationTextBox.Text & "?", MsgBoxStyle.YesNo, "CONFIRM RESTORE")
-                    Case MsgBoxResult.Yes
-                        DoRestore()
-                    Case MsgBoxResult.No
-                        Exit Sub
-                End Select
-            Else
-                MsgBox("RAWNAND.BIN not found in " & BackupLocationPathTextbox.Text)
-            End If
+        If My.Computer.FileSystem.FileExists(BackupLocationPathTextbox.Text & BinaryName) Then
+            Select Case MsgBox("Are you sure you want to restore " & BinaryName & " to " & LocationTextBox.Text & "?", MsgBoxStyle.YesNo, "CONFIRM RESTORE")
+                Case MsgBoxResult.Yes
+                    DoRestore()
+                Case MsgBoxResult.No
+                    Exit Sub
+            End Select
+        Else
+            MsgBox(BinaryName & " not found in " & BackupLocationPathTextbox.Text)
         End If
     End Sub
 
-    Private Sub DoRestore()
-        CalculateFileSelection(BorR.Restore)
+    Private Sub DoRestore(cmd As String)
+        CreateCommand(BorR.Restore)
 
-        Dim myProcessStartInfo As New ProcessStartInfo()
+        Dim myProcess As New Process()
 
-        With myProcessStartInfo
+        With myProcess.StartInfo
             .FileName = inspector
-            .Arguments = RestoreCommand
+            .Arguments = cmd
             '.Verb = "runas"
-
+            .Verb = "runas"
             .CreateNoWindow = False
             .UseShellExecute = True
 
             .RedirectStandardOutput = True
-
         End With
 
-        Process.Start(myProcessStartInfo)
+        myProcess.Start()
+
+        For Each ln As String In myProcess.StandardOutput.ReadToEnd.Split(CChar(vbLf))
+            Logger.Log(ln)
+        Next
 
         MyRestoreProgress()
     End Sub
@@ -361,7 +307,7 @@ Public Class frmMain
                         If FolderBrowserDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
                             SelectedFolder = IIf(Not FolderBrowserDialog1.SelectedPath.EndsWith("\"), FolderBrowserDialog1.SelectedPath & "\", FolderBrowserDialog1.SelectedPath)
                             BackupLocationPathTextbox.Text = SelectedFolder
-                            CalculateFileSelection(BorR.Restore)
+                            CreateCommand(BorR.Restore)
                         End If
 
                         If BackupLocationPathTextbox.Text = "" Then
@@ -383,42 +329,19 @@ Public Class frmMain
     End Sub
 
 
-    Private Sub CalculateFileSelection(BorR As BorR)
+    Private Function CreateCommand(BorR As BorR) As String
         LocationTextBox.Text = drive.DriveVolumeName
-        BinaryName = IIf(BOOT0.Checked, "BOOT0.BIN", IIf(BOOT1.Checked, "BOOT1.BIN", IIf(RAWNAND.Checked, "RAWNAND.BIN", "")))
 
-        Dim cmd = String.Format("-{0} {1} ""{2}"" {3} {4}", BorR.ToString,
-                                                            drive.DrivePhysicalName,
-                                                            SelectedFolder & BinaryName,
-                                                            IIf(BOOT0.Checked, "2", IIf(BOOT1.Checked, "8194", IIf(RAWNAND.Checked, "16386", ""))),
-                                                            IIf(BorR = BorR.Backup, IIf(BOOT0.Checked, "8192", IIf(BOOT1.Checked, "8192", IIf(RAWNAND.Checked, "61071360", ""))), ""))
-
-        'If BOOT0.Checked = True Then
-        '    Backupcommand = "-backup " + drive.DrivePhysicalName + " " + """" + SelectedFolder + "BOOT0.BIN" + """ " + "2 8192"
-        '    RestoreCommand = "-restore " + drive.DrivePhysicalName + " " + """" + SelectedFolder + "BOOT0.BIN" + """ " + "2"
-        '    BinaryName = "BOOT0.BIN"
-        '    BinaryFileSize = 4194304
-        'End If
-
-        'If BOOT1.Checked = True Then
-        '    Backupcommand = "-backup " + drive.DrivePhysicalName + " " + """" + SelectedFolder + "BOOT1.BIN" + """ " + "8194 8192"
-        '    RestoreCommand = "-restore " + drive.DrivePhysicalName + " " + """" + SelectedFolder + "BOOT1.BIN" + """ " + "8194"
-        '    BinaryName = "BOOT1.BIN"
-        '    BinaryFileSize = 4194304
-        'End If
-
-        'If RAWNAND.Checked = True Then
-        '    Backupcommand = "-backup " + drive.DrivePhysicalName + " " + """" + SelectedFolder + "RAWNAND.BIN" + """ " + "16386 61071360"
-        '    RestoreCommand = "-restore " + drive.DrivePhysicalName + " " + """" + SelectedFolder + "RAWNAND.BIN" + """ " + "16386"
-        '    BinaryName = "RAWNAND.BIN"
-        '    BinaryFileSize = 31268536320
-        'End If
-
-        'Console.WriteLine("Backup Command: " & Backupcommand)
-        'Console.WriteLine("Restore Command: " & RestoreCommand)
+        Dim cmd = String.Format("-{0} {1} ""{2}"" {3} {4}",
+            BorR.ToString,
+            drive.DrivePhysicalName,
+            SelectedFolder & BinaryName,
+            IIf(BOOT0.Checked, "2", IIf(BOOT1.Checked, "8194", IIf(RAWNAND.Checked, "16386", ""))),
+            IIf(BorR = BorR.Backup, IIf(BOOT0.Checked, "8192", IIf(BOOT1.Checked, "8192", IIf(RAWNAND.Checked, "61071360", ""))), ""))
 
         Console.WriteLine(cmd)
-    End Sub
+        Return cmd
+    End Function
 
     Public Function FormatBytes(ByVal BytesCaller As ULong) As String
         Try

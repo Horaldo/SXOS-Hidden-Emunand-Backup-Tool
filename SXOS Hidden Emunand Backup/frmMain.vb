@@ -294,20 +294,38 @@ Public Class frmMain
     Private Sub DoBackup()
         CalculateFileSelection()
 
-        Dim myProcessStartInfo As New ProcessStartInfo()
+        'Dim myProcessStartInfo As New ProcessStartInfo()
+
+        'With myProcessStartInfo
+        '    .FileName = "secinspect.exe"
+        '    .Arguments = Backupcommand
+        '    '.Verb = "runas"
+
+        '    .CreateNoWindow = True
+        '    .UseShellExecute = False
+        'End With
+
+        'Process.Start(myProcessStartInfo)
+
+        Dim myProcessStartInfo As New Process()
 
         With myProcessStartInfo
-            .FileName = "secinspect.exe"
-            .Arguments = Backupcommand
-            '.Verb = "runas"
+            .StartInfo.FileName = "secinspect.exe"
+            .StartInfo.Arguments = Backupcommand
+            .StartInfo.Verb = "runas"
+            .StartInfo.RedirectStandardOutput = True
+            .StartInfo.CreateNoWindow = False
+            .StartInfo.UseShellExecute = False
 
-            .CreateNoWindow = True
-            .UseShellExecute = False
         End With
+        myProcessStartInfo.Start()
 
-        Process.Start(myProcessStartInfo)
+        'Process.StartInfo.Start(myProcessStartInfo)
 
-
+        Dim output() As String = myProcessStartInfo.StandardOutput.ReadToEnd.Split(CChar(vbLf))
+        For Each ln As String In output
+            TextBox1.AppendText(ln & vbNewLine)
+        Next
 
         Fileprogress()
     End Sub

@@ -60,6 +60,7 @@ Partial Class frmMain
         Me.Label2 = New System.Windows.Forms.Label()
         Me.BackupPathDebug = New System.Windows.Forms.TextBox()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.RAWNANDSPLIT = New System.Windows.Forms.RadioButton()
         Me.GroupBox1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -159,7 +160,7 @@ Partial Class frmMain
         '
         Me.BOOT0.AutoSize = True
         Me.BOOT0.Checked = True
-        Me.BOOT0.Location = New System.Drawing.Point(39, 46)
+        Me.BOOT0.Location = New System.Drawing.Point(6, 46)
         Me.BOOT0.Name = "BOOT0"
         Me.BOOT0.Size = New System.Drawing.Size(61, 17)
         Me.BOOT0.TabIndex = 7
@@ -170,7 +171,7 @@ Partial Class frmMain
         'BOOT1
         '
         Me.BOOT1.AutoSize = True
-        Me.BOOT1.Location = New System.Drawing.Point(145, 46)
+        Me.BOOT1.Location = New System.Drawing.Point(73, 46)
         Me.BOOT1.Name = "BOOT1"
         Me.BOOT1.Size = New System.Drawing.Size(61, 17)
         Me.BOOT1.TabIndex = 8
@@ -184,13 +185,14 @@ Partial Class frmMain
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.RAWNANDSPLIT)
         Me.GroupBox1.Controls.Add(Me.LocationTextBox)
         Me.GroupBox1.Controls.Add(Me.RAWNAND)
         Me.GroupBox1.Controls.Add(Me.BOOT1)
         Me.GroupBox1.Controls.Add(Me.BOOT0)
         Me.GroupBox1.Location = New System.Drawing.Point(188, 238)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(330, 71)
+        Me.GroupBox1.Size = New System.Drawing.Size(393, 71)
         Me.GroupBox1.TabIndex = 14
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Please Select Option"
@@ -211,11 +213,11 @@ Partial Class frmMain
         'RAWNAND
         '
         Me.RAWNAND.AutoSize = True
-        Me.RAWNAND.Location = New System.Drawing.Point(241, 46)
+        Me.RAWNAND.Location = New System.Drawing.Point(140, 46)
         Me.RAWNAND.Name = "RAWNAND"
-        Me.RAWNAND.Size = New System.Drawing.Size(82, 17)
+        Me.RAWNAND.Size = New System.Drawing.Size(111, 17)
         Me.RAWNAND.TabIndex = 9
-        Me.RAWNAND.Text = "RAWNAND"
+        Me.RAWNAND.Text = "RAWNAND FULL"
         Me.RAWNAND.UseVisualStyleBackColor = True
         '
         'TextBox3
@@ -390,6 +392,17 @@ Partial Class frmMain
         Me.TextBox1.Size = New System.Drawing.Size(484, 289)
         Me.TextBox1.TabIndex = 34
         '
+        'RAWNANDSPLIT
+        '
+        Me.RAWNANDSPLIT.AutoSize = True
+        Me.RAWNANDSPLIT.Location = New System.Drawing.Point(257, 46)
+        Me.RAWNANDSPLIT.Name = "RAWNANDSPLIT"
+        Me.RAWNANDSPLIT.Size = New System.Drawing.Size(115, 17)
+        Me.RAWNANDSPLIT.TabIndex = 12
+        Me.RAWNANDSPLIT.TabStop = True
+        Me.RAWNANDSPLIT.Text = "RAWNAND SPLIT"
+        Me.RAWNANDSPLIT.UseVisualStyleBackColor = True
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -470,4 +483,5 @@ Partial Class frmMain
     Friend WithEvents Label2 As Label
     Friend WithEvents BackupPathDebug As TextBox
     Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents RAWNANDSPLIT As RadioButton
 End Class

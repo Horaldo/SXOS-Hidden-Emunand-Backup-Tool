@@ -10,6 +10,18 @@ Public Class frmMain
     Dim SXOSDriveFileSystem As String
 
     Dim Backupcommand As String
+
+    Dim SplitFileNum As Integer
+
+    Dim BackupcommandSplit0 As String
+    Dim BackupcommandSplit1 As String
+    Dim BackupcommandSplit2 As String
+    Dim BackupcommandSplit3 As String
+    Dim BackupcommandSplit4 As String
+    Dim BackupcommandSplit5 As String
+    Dim BackupcommandSplit6 As String
+    Dim BackupcommandSplit7 As String
+
     Dim RestoreCommand As String
     Dim FolderLocation As String
     Dim FolderString As String
@@ -289,45 +301,47 @@ Public Class frmMain
                 DoBackup()
             End If
         End If
+
+
+        If RAWNANDSPLIT.Checked = True Then
+                If My.Computer.FileSystem.FileExists(BackupLocationPathTextbox.Text + "RAWNAND.BIN") Then
+                    Select Case MsgBox("RAWNAND.BIN already exists. Overwrite?", MsgBoxStyle.YesNoCancel, "FILE ALREADY EXISTS")
+                        Case MsgBoxResult.Yes
+                            DoBackup()
+                        Case MsgBoxResult.Cancel
+                            Exit Sub
+                        Case MsgBoxResult.No
+                            Exit Sub
+                    End Select
+                Else
+                    DoBackup()
+                End If
+            End If
     End Sub
 
     Private Sub DoBackup()
+
+
         CalculateFileSelection()
 
-        'Dim myProcessStartInfo As New ProcessStartInfo()
-
-        'With myProcessStartInfo
-        '    .FileName = "secinspect.exe"
-        '    .Arguments = Backupcommand
-        '    '.Verb = "runas"
-
-        '    .CreateNoWindow = True
-        '    .UseShellExecute = False
-        'End With
-
-        'Process.Start(myProcessStartInfo)
-
-        Dim myProcessStartInfo As New Process()
+        Dim myProcessStartInfo As New ProcessStartInfo()
 
         With myProcessStartInfo
-            .StartInfo.FileName = "secinspect.exe"
-            .StartInfo.Arguments = Backupcommand
-            .StartInfo.Verb = "runas"
-            .StartInfo.RedirectStandardOutput = True
-            .StartInfo.CreateNoWindow = True
-            .StartInfo.UseShellExecute = False
+            .FileName = "secinspect.exe"
+            .Arguments = Backupcommand
+            '.Verb = "runas"
 
+            .CreateNoWindow = True
+            .UseShellExecute = False
         End With
-        myProcessStartInfo.Start()
 
-        'Process.StartInfo.Start(myProcessStartInfo)
+        Process.Start(myProcessStartInfo)
 
-        Dim output() As String = myProcessStartInfo.StandardOutput.ReadToEnd.Split(CChar(vbLf))
-        For Each ln As String In output
-            TextBox1.AppendText(ln & vbNewLine)
-        Next
+
 
         Fileprogress()
+
+
     End Sub
 
     Private Sub RestoreCheck()
@@ -395,7 +409,6 @@ Public Class frmMain
         myProcessStartInfo.Start()
 
         'Process.StartInfo.Start(myProcessStartInfo)
-
         Dim output() As String = myProcessStartInfo.StandardOutput.ReadToEnd.Split(CChar(vbLf))
         For Each ln As String In output
             TextBox1.AppendText(ln & vbNewLine)
@@ -414,6 +427,7 @@ Public Class frmMain
     End Sub
     Private Sub RAWNAND_CheckedChanged(sender As Object, e As EventArgs) Handles RAWNAND.CheckedChanged
         CalculateFileSelection()
+        SplitFileNum = 0
     End Sub
     Private Sub Browse_Click(sender As Object, e As EventArgs) Handles Browse.Click
         If FolderBrowserDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
@@ -493,6 +507,18 @@ Public Class frmMain
             BinaryFileSize = 31268536320
         End If
 
+        If RAWNAND.Checked = True Then
+            Backupcommand = "-backup " + SXOSDrivePhysicalName + " " + """" + FolderString + "RAWNAND.BIN" + """ " + "16386 61071360"
+            RestoreCommand = "-restore " + SXOSDrivePhysicalName + " " + """" + FolderString + "RAWNAND.BIN" + """ " + "16386 CONFIRM"
+            BinaryName = "RAWNAND.BIN"
+            BinaryFileSize = 31268536320
+        End If
+
+        If RAWNANDSPLIT.Checked = True Then
+            CalculateSplitFiles()
+
+        End If
+
         BackupPathDebug.Text = Backupcommand
         RestorePathDebug.Text = RestoreCommand
 
@@ -500,6 +526,62 @@ Public Class frmMain
 
     Dim DoubleBytes As Double
     Private this As Object
+
+    Public Sub CalculateSplitFiles()
+
+
+        Select Case SplitFileNum
+            Case 0
+                Backupcommand = "-backup " + SXOSDrivePhysicalName + " " + """" + FolderString + "FULL.00.BIN" + """ " + "16386 8388352"
+                RestoreCommand = "-restore " + SXOSDrivePhysicalName + " " + """" + FolderString + "FULL.00.BIN" + """ " + "16386 CONFIRM"
+                BinaryName = "FULL.00.BIN"
+                BinaryFileSize = 4294836224
+            Case 1
+                Backupcommand = "-backup " + SXOSDrivePhysicalName + " " + """" + FolderString + "FULL.01.BIN" + """ " + "8404738 8388352"
+                RestoreCommand = "-restore " + SXOSDrivePhysicalName + " " + """" + FolderString + "FULL.01.BIN" + """ " + "8404738 CONFIRM"
+                BinaryName = "FULL.01.BIN"
+                BinaryFileSize = 4294836224
+            Case 2
+                Backupcommand = "-backup " + SXOSDrivePhysicalName + " " + """" + FolderString + "FULL.02.BIN" + """ " + "16793090 8388352"
+                RestoreCommand = "-restore " + SXOSDrivePhysicalName + " " + """" + FolderString + "FULL.01.BIN" + """ " + "16793090 CONFIRM"
+                BinaryName = "FULL.02.BIN"
+                BinaryFileSize = 4294836224
+            Case 3
+                Backupcommand = "-backup " + SXOSDrivePhysicalName + " " + """" + FolderString + "FULL.03.BIN" + """ " + "25181442 8388352"
+                RestoreCommand = "-restore " + SXOSDrivePhysicalName + " " + """" + FolderString + "FULL.01.BIN" + """ " + "25181442 CONFIRM"
+                BinaryName = "FULL.03.BIN"
+                BinaryFileSize = 4294836224
+            Case 4
+                Backupcommand = "-backup " + SXOSDrivePhysicalName + " " + """" + FolderString + "FULL.04.BIN" + """ " + "33569794 8388352"
+                RestoreCommand = "-restore " + SXOSDrivePhysicalName + " " + """" + FolderString + "FULL.01.BIN" + """ " + "33569794 CONFIRM"
+                BinaryName = "FULL.04.BIN"
+                BinaryFileSize = 4294836224
+            Case 5
+                Backupcommand = "-backup " + SXOSDrivePhysicalName + " " + """" + FolderString + "FULL.05.BIN" + """ " + "41958146 8388352"
+                RestoreCommand = "-restore " + SXOSDrivePhysicalName + " " + """" + FolderString + "FULL.01.BIN" + """ " + "41958146 CONFIRM"
+                BinaryName = "FULL.05.BIN"
+                BinaryFileSize = 4294836224
+            Case 6
+
+                Backupcommand = "-backup " + SXOSDrivePhysicalName + " " + """" + FolderString + "FULL.06.BIN" + """ " + "50346498 8388352"
+                RestoreCommand = "-restore " + SXOSDrivePhysicalName + " " + """" + FolderString + "FULL.01.BIN" + """ " + "50346498 CONFIRM"
+                BinaryName = "FULL.06.BIN"
+                BinaryFileSize = 4294836224
+            Case 7
+                Backupcommand = "-backup " + SXOSDrivePhysicalName + " " + """" + FolderString + "FULL.07.BIN" + """ " + "58734850 2352896"
+                RestoreCommand = "-restore " + SXOSDrivePhysicalName + " " + """" + FolderString + "FULL.01.BIN" + """ " + "58734850 CONFIRM"
+                BinaryName = "FULL.07.BIN"
+                BinaryFileSize = 1204682758
+        End Select
+
+
+
+
+
+
+
+    End Sub
+
 
     Public Function FormatBytes(ByVal BytesCaller As ULong) As String
 
@@ -589,6 +671,12 @@ Public Class frmMain
                 Exit Sub
             End If
         Loop
+
+        If RAWNANDSPLIT.Checked = True And SplitFileNum <> 7 Then
+            SplitFileNum = SplitFileNum + 1
+            DoBackup()
+        End If
+
         'TextBox5.Text = flength.ToString
         FileSizeTextBox.Text = (FormatBytes(CULng(flength.ToString)))
         ProgressBar1.Value = CInt(flength / 1024)
@@ -702,4 +790,5 @@ Public Class frmMain
         End If
 
     End Sub
+
 End Class

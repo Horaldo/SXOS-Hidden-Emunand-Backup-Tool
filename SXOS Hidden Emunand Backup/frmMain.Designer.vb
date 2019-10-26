@@ -39,50 +39,51 @@ Partial Class frmMain
         Me.BOOT1 = New System.Windows.Forms.RadioButton()
         Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.RAWNANDSPLIT = New System.Windows.Forms.RadioButton()
         Me.LocationTextBox = New System.Windows.Forms.TextBox()
         Me.RAWNAND = New System.Windows.Forms.RadioButton()
-        Me.TextBox3 = New System.Windows.Forms.TextBox()
-        Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
+        Me.TotalProgressBar = New System.Windows.Forms.ProgressBar()
         Me.Cancel = New System.Windows.Forms.Button()
         Me.Restore = New System.Windows.Forms.Button()
-        Me.FileSizeTextBox = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.Label4 = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Browse = New System.Windows.Forms.Button()
-        Me.BackupLocationPathTextbox = New System.Windows.Forms.TextBox()
         Me.SaveLocLabel = New System.Windows.Forms.Label()
         Me.Percent = New System.Windows.Forms.Label()
-        Me.WarningLabel = New System.Windows.Forms.Label()
         Me.RestorePathDebug = New System.Windows.Forms.TextBox()
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.DebugButton = New System.Windows.Forms.Button()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.BackupPathDebug = New System.Windows.Forms.TextBox()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
-        Me.RAWNANDSPLIT = New System.Windows.Forms.RadioButton()
+        Me.ConsoleTextBox = New System.Windows.Forms.TextBox()
+        Me.BackGroundRetoreProgress = New System.ComponentModel.BackgroundWorker()
+        Me.BackgroundRestore = New System.ComponentModel.BackgroundWorker()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.FileProgressBar = New System.Windows.Forms.ProgressBar()
+        Me.MessageLabel1 = New System.Windows.Forms.Label()
+        Me.BackgroundDeleteSplitFiles = New System.ComponentModel.BackgroundWorker()
+        Me.BackupLocationPathLabel = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'RefreshDrives
         '
-        Me.RefreshDrives.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.RefreshDrives.Location = New System.Drawing.Point(523, 203)
+        Me.RefreshDrives.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.RefreshDrives.Location = New System.Drawing.Point(7, 203)
         Me.RefreshDrives.Margin = New System.Windows.Forms.Padding(2)
         Me.RefreshDrives.Name = "RefreshDrives"
-        Me.RefreshDrives.Size = New System.Drawing.Size(58, 27)
+        Me.RefreshDrives.Size = New System.Drawing.Size(77, 20)
         Me.RefreshDrives.TabIndex = 1
-        Me.RefreshDrives.Text = "Refresh"
+        Me.RefreshDrives.Text = "Refresh List"
         Me.RefreshDrives.UseVisualStyleBackColor = True
         '
         'lvDriveInfo
         '
-        Me.lvDriveInfo.Anchor = System.Windows.Forms.AnchorStyles.Top
         Me.lvDriveInfo.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me._hidden, Me.Partition, Me.ParentDrive, Me.DriveType, Me.VolumeName, Me.FileSystem, Me.DriveSize, Me.FreeSpace})
         Me.lvDriveInfo.FullRowSelect = True
         Me.lvDriveInfo.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
-        Me.lvDriveInfo.Location = New System.Drawing.Point(10, 39)
+        Me.lvDriveInfo.Location = New System.Drawing.Point(7, 38)
         Me.lvDriveInfo.Margin = New System.Windows.Forms.Padding(2)
         Me.lvDriveInfo.MultiSelect = False
         Me.lvDriveInfo.Name = "lvDriveInfo"
@@ -139,7 +140,8 @@ Partial Class frmMain
         '
         'Backup
         '
-        Me.Backup.Location = New System.Drawing.Point(248, 315)
+        Me.Backup.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.Backup.Location = New System.Drawing.Point(243, 312)
         Me.Backup.Name = "Backup"
         Me.Backup.Size = New System.Drawing.Size(61, 30)
         Me.Backup.TabIndex = 4
@@ -150,7 +152,7 @@ Partial Class frmMain
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(141, 12)
+        Me.Label1.Location = New System.Drawing.Point(136, 12)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(339, 25)
         Me.Label1.TabIndex = 5
@@ -190,12 +192,23 @@ Partial Class frmMain
         Me.GroupBox1.Controls.Add(Me.RAWNAND)
         Me.GroupBox1.Controls.Add(Me.BOOT1)
         Me.GroupBox1.Controls.Add(Me.BOOT0)
-        Me.GroupBox1.Location = New System.Drawing.Point(188, 238)
+        Me.GroupBox1.Location = New System.Drawing.Point(183, 235)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(393, 71)
+        Me.GroupBox1.Size = New System.Drawing.Size(395, 71)
         Me.GroupBox1.TabIndex = 14
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Please Select Option"
+        '
+        'RAWNANDSPLIT
+        '
+        Me.RAWNANDSPLIT.AutoSize = True
+        Me.RAWNANDSPLIT.Location = New System.Drawing.Point(257, 46)
+        Me.RAWNANDSPLIT.Name = "RAWNANDSPLIT"
+        Me.RAWNANDSPLIT.Size = New System.Drawing.Size(115, 17)
+        Me.RAWNANDSPLIT.TabIndex = 12
+        Me.RAWNANDSPLIT.TabStop = True
+        Me.RAWNANDSPLIT.Text = "RAWNAND SPLIT"
+        Me.RAWNANDSPLIT.UseVisualStyleBackColor = True
         '
         'LocationTextBox
         '
@@ -220,25 +233,20 @@ Partial Class frmMain
         Me.RAWNAND.Text = "RAWNAND FULL"
         Me.RAWNAND.UseVisualStyleBackColor = True
         '
-        'TextBox3
+        'TotalProgressBar
         '
-        Me.TextBox3.Location = New System.Drawing.Point(248, 357)
-        Me.TextBox3.Name = "TextBox3"
-        Me.TextBox3.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.TextBox3.Size = New System.Drawing.Size(252, 20)
-        Me.TextBox3.TabIndex = 16
-        '
-        'ProgressBar1
-        '
-        Me.ProgressBar1.Location = New System.Drawing.Point(248, 354)
-        Me.ProgressBar1.Name = "ProgressBar1"
-        Me.ProgressBar1.Size = New System.Drawing.Size(252, 23)
-        Me.ProgressBar1.TabIndex = 17
+        Me.TotalProgressBar.BackColor = System.Drawing.Color.White
+        Me.TotalProgressBar.Location = New System.Drawing.Point(243, 351)
+        Me.TotalProgressBar.Name = "TotalProgressBar"
+        Me.TotalProgressBar.Size = New System.Drawing.Size(252, 23)
+        Me.TotalProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous
+        Me.TotalProgressBar.TabIndex = 17
         '
         'Cancel
         '
         Me.Cancel.Enabled = False
-        Me.Cancel.Location = New System.Drawing.Point(442, 315)
+        Me.Cancel.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.Cancel.Location = New System.Drawing.Point(437, 312)
         Me.Cancel.Name = "Cancel"
         Me.Cancel.Size = New System.Drawing.Size(58, 30)
         Me.Cancel.TabIndex = 20
@@ -247,72 +255,47 @@ Partial Class frmMain
         '
         'Restore
         '
-        Me.Restore.Location = New System.Drawing.Point(349, 315)
+        Me.Restore.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.Restore.Location = New System.Drawing.Point(344, 312)
         Me.Restore.Name = "Restore"
         Me.Restore.Size = New System.Drawing.Size(56, 30)
         Me.Restore.TabIndex = 15
         Me.Restore.Text = "Restore"
         Me.Restore.UseVisualStyleBackColor = True
         '
-        'FileSizeTextBox
-        '
-        Me.FileSizeTextBox.Location = New System.Drawing.Point(248, 383)
-        Me.FileSizeTextBox.Name = "FileSizeTextBox"
-        Me.FileSizeTextBox.ReadOnly = True
-        Me.FileSizeTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.FileSizeTextBox.Size = New System.Drawing.Size(81, 20)
-        Me.FileSizeTextBox.TabIndex = 16
-        '
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(185, 358)
+        Me.Label3.Location = New System.Drawing.Point(191, 358)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(48, 13)
+        Me.Label3.Size = New System.Drawing.Size(51, 13)
         Me.Label3.TabIndex = 21
-        Me.Label3.Text = "Progress"
-        '
-        'Label4
-        '
-        Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(185, 386)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(41, 13)
-        Me.Label4.TabIndex = 22
-        Me.Label4.Text = "Filesize"
+        Me.Label3.Text = "Progress:"
         '
         'PictureBox1
         '
         Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), System.Drawing.Image)
-        Me.PictureBox1.Location = New System.Drawing.Point(12, 251)
+        Me.PictureBox1.Location = New System.Drawing.Point(4, 251)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(160, 159)
+        Me.PictureBox1.Size = New System.Drawing.Size(176, 186)
         Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.PictureBox1.TabIndex = 23
         Me.PictureBox1.TabStop = False
         '
         'Browse
         '
-        Me.Browse.Location = New System.Drawing.Point(188, 452)
+        Me.Browse.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.Browse.Location = New System.Drawing.Point(194, 440)
         Me.Browse.Name = "Browse"
         Me.Browse.Size = New System.Drawing.Size(56, 20)
         Me.Browse.TabIndex = 12
         Me.Browse.Text = "Browse"
         Me.Browse.UseVisualStyleBackColor = True
         '
-        'BackupLocationPathTextbox
-        '
-        Me.BackupLocationPathTextbox.Location = New System.Drawing.Point(188, 426)
-        Me.BackupLocationPathTextbox.Name = "BackupLocationPathTextbox"
-        Me.BackupLocationPathTextbox.ReadOnly = True
-        Me.BackupLocationPathTextbox.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.BackupLocationPathTextbox.Size = New System.Drawing.Size(330, 20)
-        Me.BackupLocationPathTextbox.TabIndex = 11
-        '
         'SaveLocLabel
         '
         Me.SaveLocLabel.AutoSize = True
-        Me.SaveLocLabel.Location = New System.Drawing.Point(105, 429)
+        Me.SaveLocLabel.Location = New System.Drawing.Point(191, 424)
         Me.SaveLocLabel.Name = "SaveLocLabel"
         Me.SaveLocLabel.Size = New System.Drawing.Size(82, 13)
         Me.SaveLocLabel.TabIndex = 25
@@ -321,46 +304,36 @@ Partial Class frmMain
         'Percent
         '
         Me.Percent.AutoSize = True
-        Me.Percent.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Percent.Location = New System.Drawing.Point(366, 384)
+        Me.Percent.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Percent.Location = New System.Drawing.Point(499, 358)
         Me.Percent.Name = "Percent"
-        Me.Percent.Size = New System.Drawing.Size(0, 16)
+        Me.Percent.Size = New System.Drawing.Size(0, 13)
         Me.Percent.TabIndex = 26
-        '
-        'WarningLabel
-        '
-        Me.WarningLabel.AutoSize = True
-        Me.WarningLabel.BackColor = System.Drawing.SystemColors.ControlLight
-        Me.WarningLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.WarningLabel.ForeColor = System.Drawing.Color.Red
-        Me.WarningLabel.Location = New System.Drawing.Point(15, 483)
-        Me.WarningLabel.Name = "WarningLabel"
-        Me.WarningLabel.Size = New System.Drawing.Size(573, 13)
-        Me.WarningLabel.TabIndex = 27
-        Me.WarningLabel.Text = "Warning - This software is in ""alpha"" stage. Backup any important data before att" &
-    "empting a Restore"
         '
         'RestorePathDebug
         '
-        Me.RestorePathDebug.Location = New System.Drawing.Point(99, 541)
+        Me.RestorePathDebug.Location = New System.Drawing.Point(695, 61)
         Me.RestorePathDebug.Name = "RestorePathDebug"
         Me.RestorePathDebug.ReadOnly = True
-        Me.RestorePathDebug.Size = New System.Drawing.Size(484, 20)
+        Me.RestorePathDebug.Size = New System.Drawing.Size(347, 20)
         Me.RestorePathDebug.TabIndex = 28
         '
-        'Button1
+        'DebugButton
         '
-        Me.Button1.Location = New System.Drawing.Point(12, 457)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(75, 23)
-        Me.Button1.TabIndex = 29
-        Me.Button1.Text = "Debug"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.DebugButton.BackColor = System.Drawing.SystemColors.Desktop
+        Me.DebugButton.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.DebugButton.ForeColor = System.Drawing.SystemColors.HighlightText
+        Me.DebugButton.Location = New System.Drawing.Point(551, 203)
+        Me.DebugButton.Name = "DebugButton"
+        Me.DebugButton.Size = New System.Drawing.Size(27, 32)
+        Me.DebugButton.TabIndex = 29
+        Me.DebugButton.Text = ">"
+        Me.DebugButton.UseVisualStyleBackColor = False
         '
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(5, 544)
+        Me.Label5.Location = New System.Drawing.Point(601, 64)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(94, 13)
         Me.Label5.TabIndex = 31
@@ -369,7 +342,7 @@ Partial Class frmMain
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(5, 518)
+        Me.Label2.Location = New System.Drawing.Point(601, 38)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(94, 13)
         Me.Label2.TabIndex = 33
@@ -377,57 +350,100 @@ Partial Class frmMain
         '
         'BackupPathDebug
         '
-        Me.BackupPathDebug.Location = New System.Drawing.Point(99, 515)
+        Me.BackupPathDebug.Location = New System.Drawing.Point(695, 35)
         Me.BackupPathDebug.Name = "BackupPathDebug"
         Me.BackupPathDebug.ReadOnly = True
-        Me.BackupPathDebug.Size = New System.Drawing.Size(484, 20)
+        Me.BackupPathDebug.Size = New System.Drawing.Size(347, 20)
         Me.BackupPathDebug.TabIndex = 32
         '
-        'TextBox1
+        'ConsoleTextBox
         '
-        Me.TextBox1.Location = New System.Drawing.Point(99, 560)
-        Me.TextBox1.Multiline = True
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.TextBox1.Size = New System.Drawing.Size(484, 289)
-        Me.TextBox1.TabIndex = 34
+        Me.ConsoleTextBox.BackColor = System.Drawing.SystemColors.Desktop
+        Me.ConsoleTextBox.ForeColor = System.Drawing.SystemColors.HighlightText
+        Me.ConsoleTextBox.Location = New System.Drawing.Point(606, 119)
+        Me.ConsoleTextBox.Multiline = True
+        Me.ConsoleTextBox.Name = "ConsoleTextBox"
+        Me.ConsoleTextBox.ReadOnly = True
+        Me.ConsoleTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
+        Me.ConsoleTextBox.Size = New System.Drawing.Size(436, 341)
+        Me.ConsoleTextBox.TabIndex = 34
         '
-        'RAWNANDSPLIT
+        'BackGroundRetoreProgress
         '
-        Me.RAWNANDSPLIT.AutoSize = True
-        Me.RAWNANDSPLIT.Location = New System.Drawing.Point(257, 46)
-        Me.RAWNANDSPLIT.Name = "RAWNANDSPLIT"
-        Me.RAWNANDSPLIT.Size = New System.Drawing.Size(115, 17)
-        Me.RAWNANDSPLIT.TabIndex = 12
-        Me.RAWNANDSPLIT.TabStop = True
-        Me.RAWNANDSPLIT.Text = "RAWNAND SPLIT"
-        Me.RAWNANDSPLIT.UseVisualStyleBackColor = True
+        Me.BackGroundRetoreProgress.WorkerReportsProgress = True
+        Me.BackGroundRetoreProgress.WorkerSupportsCancellation = True
+        '
+        'BackgroundRestore
+        '
+        Me.BackgroundRestore.WorkerReportsProgress = True
+        Me.BackgroundRestore.WorkerSupportsCancellation = True
+        '
+        'Button1
+        '
+        Me.Button1.BackColor = System.Drawing.SystemColors.Desktop
+        Me.Button1.ForeColor = System.Drawing.SystemColors.HighlightText
+        Me.Button1.Location = New System.Drawing.Point(995, 96)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(47, 23)
+        Me.Button1.TabIndex = 35
+        Me.Button1.Text = "clear"
+        Me.Button1.UseVisualStyleBackColor = False
+        '
+        'FileProgressBar
+        '
+        Me.FileProgressBar.BackColor = System.Drawing.Color.White
+        Me.FileProgressBar.Location = New System.Drawing.Point(243, 379)
+        Me.FileProgressBar.Name = "FileProgressBar"
+        Me.FileProgressBar.Size = New System.Drawing.Size(252, 10)
+        Me.FileProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous
+        Me.FileProgressBar.TabIndex = 36
+        '
+        'MessageLabel1
+        '
+        Me.MessageLabel1.AutoSize = True
+        Me.MessageLabel1.Location = New System.Drawing.Point(243, 397)
+        Me.MessageLabel1.Name = "MessageLabel1"
+        Me.MessageLabel1.Size = New System.Drawing.Size(0, 13)
+        Me.MessageLabel1.TabIndex = 37
+        '
+        'BackgroundDeleteSplitFiles
+        '
+        Me.BackgroundDeleteSplitFiles.WorkerReportsProgress = True
+        Me.BackgroundDeleteSplitFiles.WorkerSupportsCancellation = True
+        '
+        'BackupLocationPathLabel
+        '
+        Me.BackupLocationPathLabel.AutoSize = True
+        Me.BackupLocationPathLabel.Location = New System.Drawing.Point(270, 424)
+        Me.BackupLocationPathLabel.Name = "BackupLocationPathLabel"
+        Me.BackupLocationPathLabel.Size = New System.Drawing.Size(0, 13)
+        Me.BackupLocationPathLabel.TabIndex = 38
         '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(598, 861)
-        Me.Controls.Add(Me.TextBox1)
+        Me.BackColor = System.Drawing.SystemColors.Window
+        Me.ClientSize = New System.Drawing.Size(1059, 471)
+        Me.Controls.Add(Me.BackupLocationPathLabel)
+        Me.Controls.Add(Me.MessageLabel1)
+        Me.Controls.Add(Me.FileProgressBar)
+        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.ConsoleTextBox)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.BackupPathDebug)
         Me.Controls.Add(Me.Label5)
-        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.DebugButton)
         Me.Controls.Add(Me.RestorePathDebug)
-        Me.Controls.Add(Me.WarningLabel)
         Me.Controls.Add(Me.Percent)
         Me.Controls.Add(Me.SaveLocLabel)
         Me.Controls.Add(Me.PictureBox1)
-        Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Cancel)
-        Me.Controls.Add(Me.FileSizeTextBox)
-        Me.Controls.Add(Me.ProgressBar1)
+        Me.Controls.Add(Me.TotalProgressBar)
         Me.Controls.Add(Me.Restore)
-        Me.Controls.Add(Me.TextBox3)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.Browse)
-        Me.Controls.Add(Me.BackupLocationPathTextbox)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.Backup)
         Me.Controls.Add(Me.lvDriveInfo)
@@ -463,25 +479,27 @@ Partial Class frmMain
     Friend WithEvents FolderBrowserDialog1 As FolderBrowserDialog
     Friend WithEvents GroupBox1 As GroupBox
     Friend WithEvents RAWNAND As RadioButton
-    Friend WithEvents TextBox3 As TextBox
-    Friend WithEvents ProgressBar1 As ProgressBar
+    Friend WithEvents TotalProgressBar As ProgressBar
     Friend WithEvents Cancel As Button
     Friend WithEvents Restore As Button
-    Friend WithEvents FileSizeTextBox As TextBox
     Friend WithEvents Label3 As Label
-    Friend WithEvents Label4 As Label
     Friend WithEvents LocationTextBox As TextBox
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents Browse As Button
-    Friend WithEvents BackupLocationPathTextbox As TextBox
     Friend WithEvents SaveLocLabel As Label
     Friend WithEvents Percent As Label
-    Friend WithEvents WarningLabel As Label
     Friend WithEvents RestorePathDebug As TextBox
-    Friend WithEvents Button1 As Button
+    Friend WithEvents DebugButton As Button
     Friend WithEvents Label5 As Label
     Friend WithEvents Label2 As Label
     Friend WithEvents BackupPathDebug As TextBox
-    Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents ConsoleTextBox As TextBox
     Friend WithEvents RAWNANDSPLIT As RadioButton
+    Friend WithEvents BackGroundRetoreProgress As System.ComponentModel.BackgroundWorker
+    Friend WithEvents BackgroundRestore As System.ComponentModel.BackgroundWorker
+    Friend WithEvents Button1 As Button
+    Friend WithEvents FileProgressBar As ProgressBar
+    Friend WithEvents MessageLabel1 As Label
+    Friend WithEvents BackgroundDeleteSplitFiles As System.ComponentModel.BackgroundWorker
+    Friend WithEvents BackupLocationPathLabel As Label
 End Class

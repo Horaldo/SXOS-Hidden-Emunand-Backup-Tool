@@ -155,6 +155,8 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="secinspect.exe" />
+    <None Include="Resources\blip.wav" />
     <None Include="bin\Debug\secinspect.exe" />
     <Content Include="Hidden_Emu_Icon_03.ico" />
     <Content Include="icon_pe8_icon.ico" />

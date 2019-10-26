@@ -402,6 +402,7 @@ Public Class frmMain
                         Browse.Enabled = False
                         RefreshDrives.Enabled = False
                         lvDriveInfo.Enabled = False
+                        HEADER.Enabled = False
                         BOOT0.Enabled = False
                         BOOT1.Enabled = False
                         RAWNAND.Enabled = False
@@ -592,6 +593,14 @@ Public Class frmMain
     Private Sub CalculateFileSelection()
         LocationTextBox.Text = SXOSDriveVolumeName
 
+
+        If HEADER.Checked = True Then
+            Backupcommand = "-backup " + SXOSDrivePhysicalName + " " + """" + FolderString + "HEADER.BIN" + """ " + "0 2"
+            RestoreCommand = "-restore " + SXOSDrivePhysicalName + " " + """" + FolderString + "HEADER.BIN" + """ " + "0 CONFIRM"
+            BinaryName = "HEADER.BIN"
+            BinaryFileSize = 1024
+        End If
+
         If BOOT0.Checked = True Then
             Backupcommand = "-backup " + SXOSDrivePhysicalName + " " + """" + FolderString + "BOOT0.BIN" + """ " + "2 8192"
             RestoreCommand = "-restore " + SXOSDrivePhysicalName + " " + """" + FolderString + "BOOT0.BIN" + """ " + "2 CONFIRM"
@@ -740,6 +749,7 @@ Public Class frmMain
         Browse.Enabled = True
         RefreshDrives.Enabled = True
         lvDriveInfo.Enabled = True
+        HEADER.Enabled = True
         BOOT0.Enabled = True
         BOOT1.Enabled = True
         RAWNAND.Enabled = True
@@ -763,6 +773,7 @@ Public Class frmMain
             Browse.Enabled = False
             RefreshDrives.Enabled = False
             lvDriveInfo.Enabled = False
+            HEADER.Enabled = False
             BOOT0.Enabled = False
             BOOT1.Enabled = False
             RAWNAND.Enabled = False
@@ -887,6 +898,9 @@ Public Class frmMain
         ElseIf RAWNAND.Checked = True Then
             My.Computer.Audio.Play(My.Resources.blip, AudioPlayMode.Background)
             MsgBox("RAWNAND backup complete!")
+        ElseIf HEADER.Checked = True Then
+            My.Computer.Audio.Play(My.Resources.blip, AudioPlayMode.Background)
+            MsgBox("HEADER backup complete!")
         ElseIf BOOT0.Checked = True Then
             My.Computer.Audio.Play(My.Resources.blip, AudioPlayMode.Background)
             MsgBox("BOOT0 backup complete!")
@@ -919,6 +933,7 @@ Public Class frmMain
         Browse.Enabled = True
         RefreshDrives.Enabled = True
         lvDriveInfo.Enabled = True
+        HEADER.Enabled = True
         BOOT0.Enabled = True
         BOOT1.Enabled = True
         RAWNAND.Enabled = True
@@ -1024,6 +1039,7 @@ Public Class frmMain
             Browse.Enabled = False
             RefreshDrives.Enabled = False
             lvDriveInfo.Enabled = False
+            HEADER.Enabled = False
             BOOT0.Enabled = False
             BOOT1.Enabled = False
             RAWNAND.Enabled = False
@@ -1160,6 +1176,7 @@ Public Class frmMain
         Browse.Enabled = True
         RefreshDrives.Enabled = True
         lvDriveInfo.Enabled = True
+        HEADER.Enabled = True
         BOOT0.Enabled = True
         BOOT1.Enabled = True
         RAWNAND.Enabled = True

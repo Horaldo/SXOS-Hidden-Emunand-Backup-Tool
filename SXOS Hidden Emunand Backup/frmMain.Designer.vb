@@ -63,6 +63,7 @@ Partial Class frmMain
         Me.MessageLabel1 = New System.Windows.Forms.Label()
         Me.BackgroundDeleteSplitFiles = New System.ComponentModel.BackgroundWorker()
         Me.BackupLocationPathLabel = New System.Windows.Forms.Label()
+        Me.HEADER = New System.Windows.Forms.RadioButton()
         Me.GroupBox1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -162,7 +163,7 @@ Partial Class frmMain
         '
         Me.BOOT0.AutoSize = True
         Me.BOOT0.Checked = True
-        Me.BOOT0.Location = New System.Drawing.Point(6, 46)
+        Me.BOOT0.Location = New System.Drawing.Point(93, 45)
         Me.BOOT0.Name = "BOOT0"
         Me.BOOT0.Size = New System.Drawing.Size(61, 17)
         Me.BOOT0.TabIndex = 7
@@ -173,7 +174,7 @@ Partial Class frmMain
         'BOOT1
         '
         Me.BOOT1.AutoSize = True
-        Me.BOOT1.Location = New System.Drawing.Point(73, 46)
+        Me.BOOT1.Location = New System.Drawing.Point(160, 45)
         Me.BOOT1.Name = "BOOT1"
         Me.BOOT1.Size = New System.Drawing.Size(61, 17)
         Me.BOOT1.TabIndex = 8
@@ -187,14 +188,15 @@ Partial Class frmMain
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.HEADER)
         Me.GroupBox1.Controls.Add(Me.RAWNANDSPLIT)
         Me.GroupBox1.Controls.Add(Me.LocationTextBox)
         Me.GroupBox1.Controls.Add(Me.RAWNAND)
         Me.GroupBox1.Controls.Add(Me.BOOT1)
         Me.GroupBox1.Controls.Add(Me.BOOT0)
-        Me.GroupBox1.Location = New System.Drawing.Point(183, 235)
+        Me.GroupBox1.Location = New System.Drawing.Point(67, 228)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(395, 71)
+        Me.GroupBox1.Size = New System.Drawing.Size(465, 71)
         Me.GroupBox1.TabIndex = 14
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Please Select Option"
@@ -202,7 +204,7 @@ Partial Class frmMain
         'RAWNANDSPLIT
         '
         Me.RAWNANDSPLIT.AutoSize = True
-        Me.RAWNANDSPLIT.Location = New System.Drawing.Point(257, 46)
+        Me.RAWNANDSPLIT.Location = New System.Drawing.Point(344, 46)
         Me.RAWNANDSPLIT.Name = "RAWNANDSPLIT"
         Me.RAWNANDSPLIT.Size = New System.Drawing.Size(115, 17)
         Me.RAWNANDSPLIT.TabIndex = 12
@@ -216,7 +218,7 @@ Partial Class frmMain
         Me.LocationTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.LocationTextBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LocationTextBox.ForeColor = System.Drawing.Color.FromArgb(CType(CType(235, Byte), Integer), CType(CType(73, Byte), Integer), CType(CType(78, Byte), Integer))
-        Me.LocationTextBox.Location = New System.Drawing.Point(90, 17)
+        Me.LocationTextBox.Location = New System.Drawing.Point(166, 19)
         Me.LocationTextBox.Name = "LocationTextBox"
         Me.LocationTextBox.ReadOnly = True
         Me.LocationTextBox.Size = New System.Drawing.Size(159, 20)
@@ -226,7 +228,7 @@ Partial Class frmMain
         'RAWNAND
         '
         Me.RAWNAND.AutoSize = True
-        Me.RAWNAND.Location = New System.Drawing.Point(140, 46)
+        Me.RAWNAND.Location = New System.Drawing.Point(227, 45)
         Me.RAWNAND.Name = "RAWNAND"
         Me.RAWNAND.Size = New System.Drawing.Size(111, 17)
         Me.RAWNAND.TabIndex = 9
@@ -275,7 +277,7 @@ Partial Class frmMain
         'PictureBox1
         '
         Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), System.Drawing.Image)
-        Me.PictureBox1.Location = New System.Drawing.Point(4, 251)
+        Me.PictureBox1.Location = New System.Drawing.Point(7, 305)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(176, 186)
         Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -419,12 +421,23 @@ Partial Class frmMain
         Me.BackupLocationPathLabel.Size = New System.Drawing.Size(0, 13)
         Me.BackupLocationPathLabel.TabIndex = 38
         '
+        'HEADER
+        '
+        Me.HEADER.AutoSize = True
+        Me.HEADER.Location = New System.Drawing.Point(6, 45)
+        Me.HEADER.Name = "HEADER"
+        Me.HEADER.Size = New System.Drawing.Size(70, 17)
+        Me.HEADER.TabIndex = 13
+        Me.HEADER.TabStop = True
+        Me.HEADER.Text = "HEADER"
+        Me.HEADER.UseVisualStyleBackColor = True
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.Window
-        Me.ClientSize = New System.Drawing.Size(1059, 471)
+        Me.ClientSize = New System.Drawing.Size(1059, 532)
         Me.Controls.Add(Me.BackupLocationPathLabel)
         Me.Controls.Add(Me.MessageLabel1)
         Me.Controls.Add(Me.FileProgressBar)
@@ -502,4 +515,5 @@ Partial Class frmMain
     Friend WithEvents MessageLabel1 As Label
     Friend WithEvents BackgroundDeleteSplitFiles As System.ComponentModel.BackgroundWorker
     Friend WithEvents BackupLocationPathLabel As Label
+    Friend WithEvents HEADER As RadioButton
 End Class

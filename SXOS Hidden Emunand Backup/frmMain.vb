@@ -478,6 +478,21 @@ Public Class frmMain
             End If
         End If
 
+        '*********************************************************************************************************************
+        'This Code To Be Modified so it Can split the RAWNAND.BIN into SPlit files to support Restoring.
+        'Alternatively Do we only allow split file dumping with an option to merge once all parts are dumped?
+        'Merge of file  can be done in cmd prompt with this command: copy /b full.*.bin RAWNAND.bin
+        'We Need a to prompt user if they are restoring to existing hidden SXOS Emunand SD Card Or Using a New SD Card
+        'If New SD CARD is used then they must also restore Header + Boot0 + Boot 1
+        'If user has made changes to only rawnand using hackdiskmount then Split Rawnand  & restore back the split files only (EG Inserted Online Account Manually
+        'Restore creates a .DSK file for each setcor your restoring. Final Size should be same as .bin been restored
+        'You should be able to use that to calculate Progress Bar on Restore,
+        'Potentially Delete .DSK files upon successfull restore to free up Space, Total Space Consumed during restore 30GB
+        'Can market .DSK files as a feature. " Screwed your restore? dont panic, Just restore the DSK file and changes will be reverted"
+        'I Will need a couple dumps of header files from Different SD Formats example FAT32. EXFAT Both With Hidden EMunand & also Files EMunand as created by SXOS
+        'This is required so i can see what changes are made to switch from a hidden emunand / files emunand without format Hopefullly
+        '*********************************************************************************************************************
+
         If RAWNAND.Checked = True Then
             If My.Computer.FileSystem.FileExists(BackupLocationPathLabel.Text + "RAWNAND.BIN") Then
                 My.Computer.Audio.Play(My.Resources.blip, AudioPlayMode.Background)

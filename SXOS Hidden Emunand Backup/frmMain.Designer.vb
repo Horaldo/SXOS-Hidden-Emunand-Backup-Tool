@@ -64,6 +64,7 @@ Partial Class frmMain
         Me.BackgroundDeleteSplitFiles = New System.ComponentModel.BackgroundWorker()
         Me.BackupLocationPathLabel = New System.Windows.Forms.Label()
         Me.HEADER = New System.Windows.Forms.RadioButton()
+        Me.Button2 = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -432,12 +433,22 @@ Partial Class frmMain
         Me.HEADER.Text = "HEADER"
         Me.HEADER.UseVisualStyleBackColor = True
         '
+        'Button2
+        '
+        Me.Button2.Location = New System.Drawing.Point(400, 440)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(75, 23)
+        Me.Button2.TabIndex = 14
+        Me.Button2.Text = "Button2"
+        Me.Button2.UseVisualStyleBackColor = True
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.Window
         Me.ClientSize = New System.Drawing.Size(1059, 532)
+        Me.Controls.Add(Me.Button2)
         Me.Controls.Add(Me.BackupLocationPathLabel)
         Me.Controls.Add(Me.MessageLabel1)
         Me.Controls.Add(Me.FileProgressBar)
@@ -516,4 +527,5 @@ Partial Class frmMain
     Friend WithEvents BackgroundDeleteSplitFiles As System.ComponentModel.BackgroundWorker
     Friend WithEvents BackupLocationPathLabel As Label
     Friend WithEvents HEADER As RadioButton
+    Friend WithEvents Button2 As Button
 End Class

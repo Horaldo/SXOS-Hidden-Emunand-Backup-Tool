@@ -1322,5 +1322,53 @@ Public Class frmMain
 
     End Sub
 
+    Private Function SplitFile(
+    ByVal inputFileName As String, ByVal outputFileName As String, ByVal numberOfFiles As Integer) _
+    As List(Of String)
+        Dim returnList As New List(Of String)
+        Try
+            Dim outputFileExtension As String = IO.Path.GetExtension(outputFileName)
+            outputFileName = outputFileName.Replace(outputFileExtension, "")
+            Dim sr As New IO.StreamReader(inputFileName)
+            Dim fileLength As Long = sr.BaseStream.Length
+            Dim baseBufferSize As Long = fileLength \ numberOfFiles
+            Dim finished As Boolean = False
+            Dim fileCount As Integer = 1
+            Do Until finished
+                Dim bufferSize As Long = CLng(baseBufferSize)
+                Dim originalPosition As Long = sr.BaseStream.Position
+                'find line first line feed after the base buffer length
+                sr.BaseStream.Position += bufferSize
+                If sr.BaseStream.Position < fileLength Then
+                    Do Until sr.Read = 10
+                        bufferSize += 1
+                    Loop
+                    bufferSize += 1
+                Else
+                    bufferSize = CLng(fileLength - originalPosition)
+                    finished = True
+                End If
+                'write the chunk of data to a buffer in memory
+                sr.BaseStream.Position = originalPosition
+                'BitConverter.GetBytes(bufferSize - 1)
+                Dim buffer As Byte() = BitConverter.GetBytes(bufferSize - 1)
+                sr.BaseStream.Read(buffer, 0, CInt(bufferSize))
+                'write the chunk of data to a file
+                Dim outputPath As String = outputFileName & fileCount.ToString & outputFileExtension
+                returnList.Add(outputPath)
+                My.Computer.FileSystem.WriteAllBytes(
+                outputPath, buffer, False)
+                fileCount += 1
+            Loop
+        Catch ex As Exception
+            Console.Write(ex.ToString)
+        End Try
+        Return returnList
+    End Function
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Call SplitFile("rawnand.bin", "split.bin", 7)
+    End Sub
+
 
 End Class

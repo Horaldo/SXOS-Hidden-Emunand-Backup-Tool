@@ -1328,13 +1328,18 @@ Public Class frmMain
         Dim returnList As New List(Of String)
         Try
             Dim outputFileExtension As String = IO.Path.GetExtension(outputFileName)
-            'outputFileName = outputFileName.Substring(outputFileName.Length - outputFileExtension.Length)
-            outputFileName = outputFileName.Replace(outputFileExtension, "")
+            outputFileName = outputFileName.Substring(0, outputFileName.Length - outputFileExtension.Length)
+
+            'outputFileName = outputFileName.Replace(outputFileExtension, "")
             Dim source As New FileStream(inputFileName, FileMode.Open)
-            Dim buffer As Byte() = New Byte(4096) {}
+            Dim buffer As Byte() = New Byte(1) {}
             Dim readBytes As Int32
             Dim fileCount As Integer = 1
-            Dim currentFilename As String = outputFileName & "." & fileCount.ToString()
+            Dim currentFilename As String = outputFileName & "." & "0" & fileCount.ToString() & outputFileExtension
+            If fileCount >= 10 Then
+                currentFilename = outputFileName & "." & fileCount.ToString() & outputFileExtension
+            End If
+
             Dim target As New FileStream(currentFilename, FileMode.OpenOrCreate)
             readBytes = source.Read(buffer, 0, buffer.Length)
             Do While readBytes > 0
@@ -1342,7 +1347,11 @@ Public Class frmMain
                     target.Close()
                     returnList.Add(currentFilename)
                     fileCount += 1
-                    currentFilename = outputFileName & "." & fileCount.ToString()
+
+                    currentFilename = outputFileName & "." & "0" & fileCount.ToString() & outputFileExtension
+                    If fileCount >= 10 Then
+                        currentFilename = outputFileName & "." & fileCount.ToString() & outputFileExtension
+                    End If
                     target = New FileStream(currentFilename, FileMode.OpenOrCreate)
                 End If
                 target.Write(buffer, 0, readBytes)
